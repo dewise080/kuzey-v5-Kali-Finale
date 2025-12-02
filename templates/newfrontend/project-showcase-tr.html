@@ -1,0 +1,1930 @@
+{% extends 'newfrontend/base.html' %}
+{% load static %}
+
+{% block title %}Proje Vitrini - Kuzey Emlak Platformu{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Circular Progress Animation */
+  .circular-progress-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circular-progress {
+    position: relative;
+    width: 150px;
+    height: 150px;
+  }
+  
+  .progress-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  
+  .progress-ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.1);
+    stroke-width: 8;
+  }
+  
+  .progress-ring-fill {
+    fill: none;
+    stroke: url(#progressGradient);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 339.292;
+    stroke-dashoffset: 339.292;
+    transition: stroke-dashoffset 2s ease-out;
+  }
+  
+  .progress-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .progress-label {
+    margin-top: 15px;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Project Showcase Custom Styles */
+  .showcase-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    padding: 80px 0 60px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .showcase-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  
+  .showcase-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .showcase-hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .showcase-hero h1 span {
+    background: linear-gradient(90deg, #f59e0b, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .showcase-hero .lead {
+    font-size: 20px;
+    opacity: 0.9;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  
+  .showcase-hero .badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #22c55e;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .showcase-hero .badge-live::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+  
+  /* Stats Cards */
+  .stats-section {
+    margin-top: -40px;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 60px;
+  }
+  
+  .stat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  }
+  
+  .stat-card .icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 24px;
+    color: #fff;
+  }
+  
+  .stat-card h3 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 5px;
+  }
+  
+  .stat-card p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  /* Development Effort Section */
+  .effort-section {
+    background: #f8fafc;
+    padding: 80px 0;
+  }
+  
+  .effort-highlight {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-radius: 20px;
+    padding: 40px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .effort-highlight::before {
+    content: '💪';
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 60px;
+    opacity: 0.2;
+  }
+  
+  .effort-highlight h4 {
+    color: #f59e0b;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+  }
+  
+  .effort-highlight h2 {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  
+  .effort-stat {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .effort-stat:last-child {
+    border-bottom: none;
+  }
+  
+  .effort-stat .emoji {
+    font-size: 24px;
+  }
+  
+  .effort-stat .label {
+    flex: 1;
+    opacity: 0.8;
+  }
+  
+  .effort-stat .value {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  
+  .effort-stat .strikethrough {
+    text-decoration: line-through;
+    opacity: 0.5;
+    margin-right: 10px;
+  }
+  
+  .effort-stat .highlight {
+    color: #22c55e;
+  }
+  
+  /* Progress Bars */
+  .progress-section {
+    padding: 80px 0;
+  }
+  
+  .progress-item {
+    margin-bottom: 25px;
+  }
+  
+  .progress-item .label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .progress-item .label {
+    font-weight: 600;
+    color: #1e293b;
+  }
+  
+  .progress-item .percentage {
+    color: #a38344;
+    font-weight: 700;
+  }
+  
+  .progress-bar-wrapper {
+    height: 12px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #a38344, #c9a227);
+    border-radius: 6px;
+    transition: width 1s ease;
+  }
+  
+  .progress-item .desc {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 5px;
+  }
+  
+  /* Features Grid */
+  .features-section {
+    background: #fff;
+    padding: 80px 0;
+  }
+  
+  .feature-card {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 30px;
+    height: 100%;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    border-color: #a38344;
+    box-shadow: 0 10px 30px rgba(163, 131, 68, 0.1);
+  }
+  
+  .feature-card .icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+  
+  .feature-card h5 {
+    color: #1e293b;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .feature-card p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .feature-card .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 15px;
+  }
+  
+  /* Technology Stack */
+  .tech-section {
+    background: #0f172a;
+    padding: 80px 0;
+    color: #fff;
+  }
+  
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .tech-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .tech-item:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-3px);
+  }
+  
+  .tech-item .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .tech-item .name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  /* Languages Section */
+  .languages-section {
+    padding: 80px 0;
+    background: #f8fafc;
+  }
+  
+  .lang-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+  }
+  
+  .lang-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .lang-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .lang-item .flag {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  
+  .lang-item .name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  
+  /* Architecture Section */
+  .architecture-section {
+    padding: 80px 0;
+  }
+  
+  .arch-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .arch-table th,
+  .arch-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .arch-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  
+  .arch-table td:first-child {
+    font-weight: 600;
+    color: #a38344;
+  }
+  
+  .arch-table td:nth-child(2) {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 18px;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    padding: 80px 0;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .cta-section h2 {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .cta-section p {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-btn.primary {
+    background: #fff;
+    color: #a38344;
+  }
+  
+  .cta-btn.primary:hover {
+    background: #f8fafc;
+    transform: translateY(-2px);
+  }
+  
+  .cta-btn.secondary {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  
+  .cta-btn.secondary:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .showcase-hero h1 {
+      font-size: 32px;
+    }
+    
+    .stat-card {
+      margin-bottom: 20px;
+    }
+    
+    .effort-highlight {
+      padding: 25px;
+    }
+    
+    .effort-highlight h2 {
+      font-size: 24px;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="showcase-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="badge-live">Canlı Demo Mevcut</div>
+        <h1>Kuzey Emlak <span>Gayrimenkul Platformu</span></h1>
+        <p class="lead">
+          13 dil desteği, interaktif haritalar, GraphQL ve REST API'ler, statik site oluşturma ve 
+          gelişmiş görüntü işleme araçları sunan kapsamlı kurumsal düzeyde Django platformu.
+        </p>
+        <div style="margin-top: 30px;">
+          <a href="https://kuzey-emlak.lotfinity.tech" target="_blank" class="icon-button" style="display: inline-block;">
+            <a href="https://kuzey-emlak.lotfinity.tech" target="_blank" style="background: #a38344; color: #fff; padding: 15px 30px; border-radius: 8px; display: inline-flex; align-items: center; gap: 10px;">
+              <i class="fa fa-external-link-alt"></i> Canlı Demoyu Görüntüle
+            </a>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 text-center d-none d-lg-block">
+        <div class="circular-progress-wrapper">
+          <div class="circular-progress" data-progress="100">
+            <svg class="progress-ring" viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#a38344"/>
+                  <stop offset="100%" style="stop-color:#f59e0b"/>
+                </linearGradient>
+              </defs>
+              <circle class="progress-ring-bg" cx="60" cy="60" r="54"/>
+              <circle class="progress-ring-fill" cx="60" cy="60" r="54"/>
+            </svg>
+            <div class="progress-value">0%</div>
+          </div>
+          <p class="progress-label">Proje Tamamlanma</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="stats-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="icon"><i class="fa fa-file-code"></i></div>
+          <h3>2.567</h3>
+          <p>Kaynak Dosyası</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="icon"><i class="fa fa-code"></i></div>
+          <h3>45K+</h3>
+          <p>Kod Satırı</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="icon"><i class="fa fa-globe"></i></div>
+          <h3>13</h3>
+          <p>Dil Desteği</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="icon"><i class="fa fa-database"></i></div>
+          <h3>67</h3>
+          <p>Veritabanı Modeli</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Development Effort Section -->
+<div class="section effort-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="section-heading">
+          <h6>| Gerçek Geliştirme İstatistikleri</h6>
+          <h2>Özveri ve Yoğunlukla İnşa Edildi</h2>
+        </div>
+        <p>Bu platform, yoğun günlük kodlama seanslarıyla inşa edilmiş önemli bir zaman ve uzmanlık yatırımını temsil etmektedir.</p>
+      </div>
+      <div class="col-lg-8">
+        <div class="effort-highlight">
+          <h4>Geliştirme Çabası</h4>
+          <h2>Konseptten Üretime</h2>
+          
+          <div class="effort-stat">
+            <span class="emoji">👨‍💻</span>
+            <span class="label">Günlük Çalışma Saatleri</span>
+            <span class="value">16-18 saat</span>
+          </div>
+          
+          <div class="effort-stat">
+            <span class="emoji">📅</span>
+            <span class="label">Geliştirme Süresi</span>
+            <span class="value">
+              <span class="strikethrough">3-4 ay</span>
+              <span class="highlight">18 gün</span>
+            </span>
+          </div>
+          
+          <div class="effort-stat">
+            <span class="emoji">⏰</span>
+            <span class="label">Toplam Yatırılan Saat</span>
+            <span class="value">500-700+</span>
+          </div>
+          
+          <div class="effort-stat">
+            <span class="emoji">🧪</span>
+            <span class="label">Uygulanan Özellikler</span>
+            <span class="value">50+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Complexity Progress Bars -->
+<div class="section progress-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="section-heading">
+          <h6>| Karmaşıklık Analizi</h6>
+          <h2>Teknik Derinlik ve Genişlik</h2>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="complexity-grid">
+          
+          <div class="complexity-item">
+            <div class="complexity-header">
+              <span class="complexity-label">Backend Karmaşıklığı</span>
+              <span class="complexity-level high">YÜKSEK</span>
+            </div>
+            <div class="complexity-stars">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-alt"></i>
+            </div>
+            <p class="desc">Django, REST API'ler, GraphQL, Veritabanı Tasarımı</p>
+          </div>
+          
+          <div class="complexity-item">
+            <div class="complexity-header">
+              <span class="complexity-label">Frontend Geliştirme</span>
+              <span class="complexity-level high">YÜKSEK</span>
+            </div>
+            <div class="complexity-stars">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <p class="desc">Şablonlar, JavaScript, CSS, Duyarlı Tasarım</p>
+          </div>
+          
+          <div class="complexity-item">
+            <div class="complexity-header">
+              <span class="complexity-label">Veritabanı Tasarımı</span>
+              <span class="complexity-level high">YÜKSEK</span>
+            </div>
+            <div class="complexity-stars">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-alt"></i>
+            </div>
+            <p class="desc">67 Model, Karmaşık İlişkiler, Migrasyonlar</p>
+          </div>
+          
+          <div class="complexity-item">
+            <div class="complexity-header">
+              <span class="complexity-label">Uluslararasılaştırma</span>
+              <span class="complexity-level high">YÜKSEK</span>
+            </div>
+            <div class="complexity-stars">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <p class="desc">13 Dil, Çeviri Dosyaları, RTL Desteği</p>
+          </div>
+          
+          <div class="complexity-item">
+            <div class="complexity-header">
+              <span class="complexity-label">DevOps ve Dağıtım</span>
+              <span class="complexity-level high">YÜKSEK</span>
+            </div>
+            <div class="complexity-stars">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-alt"></i>
+            </div>
+            <p class="desc">Docker, Statik Site Oluşturma, CDN-Hazır</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .complexity-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .complexity-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 4px solid #a38344;
+  }
+  
+  .complexity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .complexity-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  
+  .complexity-level {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  
+  .complexity-level.low {
+    background: #dcfce7;
+    color: #166534;
+  }
+  
+  .complexity-level.medium {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  
+  .complexity-level.high {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+  
+  .complexity-level.extreme {
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    color: #fff;
+  }
+  
+  .complexity-stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .complexity-stars i {
+    color: #f59e0b;
+    font-size: 18px;
+  }
+  
+  .complexity-stars .far.fa-star {
+    color: #d1d5db;
+  }
+  
+  .complexity-item .desc {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+  }
+</style>
+
+<!-- Key Features Section -->
+<div class="section features-section">
+  <div class="container">
+    <div class="section-heading text-center" style="max-width: 600px; margin: 0 auto 50px;">
+      <h6>| Temel Başarılar</h6>
+      <h2>Tamamlanan ve Teslim Edilen Her Şey</h2>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">🏠</div>
+          <h5>Full-Stack Django Uygulaması</h5>
+          <p>İlanlar, emlakçılar, talepler ve kullanıcı kimlik doğrulaması ile eksiksiz mülk yönetimi.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">🔌</div>
+          <h5>OpenAPI'li RESTful API</h5>
+          <p>Mekansal filtreleme, sınırlayıcı kutu sorguları ve tam dokümantasyon ile GeoJSON uç noktaları.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">📊</div>
+          <h5>Blog için GraphQL API</h5>
+          <p>GraphiQL arayüzü ile yazılar ve kategoriler için tam CRUD mutasyonları.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">🌍</div>
+          <h5>13 Dil Desteği</h5>
+          <p>Django Rosetta ile çeviri yönetimi ve tam uluslararasılaştırma.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">🗺️</div>
+          <h5>İnteraktif Haritalar</h5>
+          <p>Özel işaretçiler, yakın çevre olanakları ve mesafe hesaplamaları ile Leaflet.js.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">📦</div>
+          <h5>Statik Site Oluşturma</h5>
+          <p>13 dil için django-distill ile CDN-hazır dağıtım.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">🖼️</div>
+          <h5>Görüntü İşleme Araçları</h5>
+          <p>Filigran, kırpma, logo yerleştirme ve tarayıcı içi düzenleme.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">🤖</div>
+          <h5>Web Kazıma İçe Aktarma</h5>
+          <p>Harici emlak sitelerinden Playwright tabanlı otomatik içe aktarma.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="icon">📱</div>
+          <h5>Duyarlı Tasarım</h5>
+          <p>Özel yönetici teması ve modern arayüz ile mobil uyumlu.</p>
+          <span class="status">✓ Tamamlandı</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Yakın Konumlar Özelliği -->
+<div class="section nearby-section" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); padding: 80px 0;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="nearby-content">
+          <h6 style="color: #f59e0b; font-weight: 600; margin-bottom: 15px;">| Akıllı Konum Analizi</h6>
+          <h2 style="color: #fff; font-size: 36px; font-weight: 700; margin-bottom: 25px;">Yakın Konumlar Sistemi</h2>
+          <p style="color: rgba(255,255,255,0.8); font-size: 17px; line-height: 1.8; margin-bottom: 30px;">
+            Her mülk ilanı için en yakın temel hizmetleri otomatik olarak hesaplayan ve gösteren akıllı bir sistem. Alıcıların bilinçli kararlar vermesine yardımcı olur.
+          </p>
+          
+          <div class="nearby-features">
+            <div class="nearby-feature-item">
+              <div class="icon-box"><i class="fa fa-subway"></i></div>
+              <div class="text">
+                <h5>Metro İstasyonları</h5>
+                <p>En yakın metro/tramvay istasyonlarına mesafeyi hesaplar</p>
+              </div>
+            </div>
+            
+            <div class="nearby-feature-item">
+              <div class="icon-box"><i class="fa fa-bus"></i></div>
+              <div class="text">
+                <h5>Minibüs ve Otobüs Durakları</h5>
+                <p>Yürüme mesafesindeki tüm toplu taşıma seçeneklerini bulur</p>
+              </div>
+            </div>
+            
+            <div class="nearby-feature-item">
+              <div class="icon-box"><i class="fa fa-taxi"></i></div>
+              <div class="text">
+                <h5>Taksi Durakları</h5>
+                <p>Yakındaki taksi alma noktalarını bulur</p>
+              </div>
+            </div>
+            
+            <div class="nearby-feature-item">
+              <div class="icon-box"><i class="fa fa-shopping-cart"></i></div>
+              <div class="text">
+                <h5>Marketler ve Dükkanlar</h5>
+                <p>Tüm market ve alışveriş seçeneklerini haritada gösterir</p>
+              </div>
+            </div>
+          </div>
+          
+          <a href="https://kuzey-emlak.lotfinity.tech/tr/new/listing/17/" target="_blank" class="btn-nearby-demo">
+            <i class="fa fa-external-link-alt"></i> Canlı Örneği Görüntüle
+          </a>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="nearby-image-wrapper">
+          <img src="{% static 'tutos/nearby.png' %}" alt="Yakın Konumlar Sistemi" class="nearby-screenshot">
+          <div class="nearby-badge">
+            <i class="fa fa-map-marker-alt"></i>
+            <span>Her ilan için otomatik hesaplanır</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .nearby-features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .nearby-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.05);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border-left: 3px solid #a38344;
+  }
+  
+  .nearby-feature-item .icon-box {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .nearby-feature-item .icon-box i {
+    color: #fff;
+    font-size: 20px;
+  }
+  
+  .nearby-feature-item .text h5 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+  }
+  
+  .nearby-feature-item .text p {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .btn-nearby-demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-nearby-demo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(163, 131, 68, 0.4);
+    color: #fff;
+  }
+  
+  .nearby-image-wrapper {
+    position: relative;
+  }
+  
+  .nearby-screenshot {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+    border: 3px solid rgba(255,255,255,0.1);
+  }
+  
+  .nearby-badge {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    white-space: nowrap;
+  }
+  
+  @media (max-width: 991px) {
+    .nearby-content {
+      text-align: center;
+    }
+    
+    .nearby-feature-item {
+      text-align: left;
+    }
+    
+    .nearby-badge {
+      font-size: 12px;
+      padding: 8px 18px;
+    }
+  }
+</style>
+
+<!-- Technology Stack -->
+<div class="tech-section">
+  <div class="container">
+    <div class="section-heading text-center" style="max-width: 600px; margin: 0 auto 50px;">
+      <h6 style="color: #f59e0b;">| Teknoloji Altyapısı</h6>
+      <h2 style="color: #fff;">Modern Araçlarla İnşa Edildi</h2>
+    </div>
+    
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="icon">🐍</div>
+        <div class="name">Python 3</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🌐</div>
+        <div class="name">Django 4.2</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🗄️</div>
+        <div class="name">PostgreSQL</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🗺️</div>
+        <div class="name">Leaflet.js</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">📊</div>
+        <div class="name">GraphQL</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🔌</div>
+        <div class="name">REST API</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🎭</div>
+        <div class="name">Playwright</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🖼️</div>
+        <div class="name">Pillow</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🎨</div>
+        <div class="name">Tailwind CSS</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">📦</div>
+        <div class="name">Whitenoise</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🐳</div>
+        <div class="name">Docker</div>
+      </div>
+      <div class="tech-item">
+        <div class="icon">🌍</div>
+        <div class="name">Rosetta</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Languages Section -->
+<div class="section languages-section">
+  <div class="container">
+    <div class="section-heading text-center" style="max-width: 600px; margin: 0 auto 50px;">
+      <h6>| Uluslararasılaştırma</h6>
+      <h2>13 Dil Destekleniyor</h2>
+    </div>
+    
+    <div class="lang-grid">
+      <a href="https://kuzey-emlak.lotfinity.tech/en/" target="_blank" class="lang-item">
+        <div class="flag">🇬🇧</div>
+        <div class="name">English</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/tr/" target="_blank" class="lang-item">
+        <div class="flag">🇹🇷</div>
+        <div class="name">Türkçe</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/de/" target="_blank" class="lang-item">
+        <div class="flag">🇩🇪</div>
+        <div class="name">Deutsch</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/fr/" target="_blank" class="lang-item">
+        <div class="flag">🇫🇷</div>
+        <div class="name">Français</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/es/" target="_blank" class="lang-item">
+        <div class="flag">🇪🇸</div>
+        <div class="name">Español</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/it/" target="_blank" class="lang-item">
+        <div class="flag">🇮🇹</div>
+        <div class="name">Italiano</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/pt/" target="_blank" class="lang-item">
+        <div class="flag">🇵🇹</div>
+        <div class="name">Português</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/nl/" target="_blank" class="lang-item">
+        <div class="flag">🇳🇱</div>
+        <div class="name">Nederlands</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/pl/" target="_blank" class="lang-item">
+        <div class="flag">🇵🇱</div>
+        <div class="name">Polski</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/ru/" target="_blank" class="lang-item">
+        <div class="flag">🇷🇺</div>
+        <div class="name">Русский</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/hu/" target="_blank" class="lang-item">
+        <div class="flag">🇭🇺</div>
+        <div class="name">Magyar</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/bg/" target="_blank" class="lang-item">
+        <div class="flag">🇧🇬</div>
+        <div class="name">Български</div>
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/ar/" target="_blank" class="lang-item">
+        <div class="flag">🇸🇦</div>
+        <div class="name">العربية</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Architecture Section -->
+<div class="section architecture-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="section-heading">
+          <h6>| Mimari Detaylar</h6>
+          <h2>Kod Tabanı Dökümü</h2>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="best-deal">
+          <div class="tabs-content">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="codebase-tab" data-bs-toggle="tab" data-bs-target="#codebase" type="button" role="tab">Kod Tabanı</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="arch-tab" data-bs-toggle="tab" data-bs-target="#arch" type="button" role="tab">Mimari</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" type="button" role="tab">Medya</button>
+              </li>
+            </ul>
+            
+            <div class="tab-content" id="archTabContent">
+              <div class="tab-pane fade show active" id="codebase" role="tabpanel">
+                <div class="row mt-4">
+                  <div class="col-lg-6">
+                    <div class="info-table">
+                      <ul>
+                        <li>Toplam Kaynak Dosyası <span>2.567</span></li>
+                        <li>Python Dosyaları <span>190</span></li>
+                        <li>HTML Şablonları <span>93</span></li>
+                        <li>Proje Dizinleri <span>1.673</span></li>
+                        <li>Bağımlılıklar <span>40</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="info-table">
+                      <ul>
+                        <li>Python Satırları <span>11.776</span></li>
+                        <li>HTML Satırları <span>20.622</span></li>
+                        <li>CSS Satırları <span>13.289</span></li>
+                        <li>Toplam Kod Satırı <span>45.000+</span></li>
+                        <li>Django Uygulamaları <span>12</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane fade" id="arch" role="tabpanel">
+                <div class="row mt-4">
+                  <div class="col-lg-6">
+                    <div class="info-table">
+                      <ul>
+                        <li>Veritabanı Modelleri <span>67</span></li>
+                        <li>Python Fonksiyonları <span>603</span></li>
+                        <li>Veritabanı Migrasyonları <span>110</span></li>
+                        <li>URL Yapılandırmaları <span>8</span></li>
+                        <li>API Uç Noktaları <span>5+</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <h4>Modüler Mimari</h4>
+                    <p>Platform, her biri belirli bir alanı yöneten 12 Django uygulamasına ayrılmıştır: ilanlar, emlakçılar, iletişim, hesaplar, blog, sayfalar, API, görüntü araçları ve daha fazlası.</p>
+                    <p>Bu modüler yaklaşım bakım kolaylığı, test edilebilirlik ve kolay özellik genişletme sağlar.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane fade" id="media" role="tabpanel">
+                <div class="row mt-4">
+                  <div class="col-lg-6">
+                    <div class="info-table">
+                      <ul>
+                        <li>Medya Dosyaları <span>1.716</span></li>
+                        <li>Mülk Görselleri <span>1.500+</span></li>
+                        <li>Çeviri Dosyaları <span>12 .po</span></li>
+                        <li>Çevrilebilir Dizeler <span>500+ dil başına</span></li>
+                        <li>Statik Varlıklar <span>Çoklu</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <h4>Zengin Medya Desteği</h4>
+                    <p>İlan başına birden fazla görsel, filigran, kırpma ve tarayıcı içi düzenleme araçları ile tam görüntü yönetimi.</p>
+                    <p>Easy Thumbnails entegrasyonu otomatik olarak duyarlı görseller sağlar.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Yönetici Eğitim Bölümü -->
+<div class="section tutorial-section" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); padding: 80px 0;">
+  <div class="container">
+    <div class="section-heading text-center" style="max-width: 700px; margin: 0 auto 50px;">
+      <h6 style="color: #f59e0b;">| Yönetici Eğitimi</h6>
+      <h2 style="color: #fff;">İlan Yönetimi Ne Kadar Kolay</h2>
+      <p style="color: rgba(255,255,255,0.8); margin-top: 15px;">Mülk ilanlarını eklemenin ve yönetmenin ne kadar basit olduğunu gösteren adım adım görsel kılavuz</p>
+    </div>
+    
+    <!-- Swiper Eğitim Carousel'i -->
+    <div class="swiper tutorialSwiper" style="padding-bottom: 60px;">
+      <div class="swiper-wrapper">
+        
+        <!-- Adım 1 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">1</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/1-adding-listing-from-sahibinden.png' %}" alt="Sahibinden'den ilan ekleme">
+            </div>
+            <div class="tutorial-content">
+              <h4>Sahibinden'den İlan Ekleme</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Yönetici paneli ilanlar bölümüne gidin</li>
+                <li><i class="fa fa-check-circle"></i> "Sahibinden'den İçe Aktar" butonuna tıklayın</li>
+                <li><i class="fa fa-check-circle"></i> Otomatik web kazıma kullanıma hazır</li>
+                <li><i class="fa fa-check-circle"></i> Manuel veri girişi gerekmez</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 2 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">2</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/2-just-insert-link.png' %}" alt="Sadece linki yapıştırın">
+            </div>
+            <div class="tutorial-content">
+              <h4>Sadece Linki Yapıştırın</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Sahibinden'den mülk URL'sini kopyalayın</li>
+                <li><i class="fa fa-check-circle"></i> İçe aktarma alanına yapıştırın</li>
+                <li><i class="fa fa-check-circle"></i> İçe aktar'a tıklayın ve bekleyin</li>
+                <li><i class="fa fa-check-circle"></i> Tüm veriler otomatik olarak çekilir</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 3 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">3</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/3-listing-will-automatically-added-sorted.png' %}" alt="İlan otomatik eklenir ve sıralanır">
+            </div>
+            <div class="tutorial-content">
+              <h4>Otomatik Eklenir ve Sıralanır</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> İlan veritabanınızda görünür</li>
+                <li><i class="fa fa-check-circle"></i> Tüm görseller otomatik indirilir</li>
+                <li><i class="fa fa-check-circle"></i> GPS koordinatları çekilir</li>
+                <li><i class="fa fa-check-circle"></i> Tarih ve kategoriye göre düzenlenir</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 4 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">4</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/4-u-can-edit-later.png' %}" alt="Daha sonra düzenleyebilirsiniz">
+            </div>
+            <div class="tutorial-content">
+              <h4>Daha Sonra Düzenleyebilirsiniz</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Tam düzenleme yetenekleri</li>
+                <li><i class="fa fa-check-circle"></i> İstediğiniz alanı değiştirin</li>
+                <li><i class="fa fa-check-circle"></i> Fiyatları ve açıklamaları güncelleyin</li>
+                <li><i class="fa fa-check-circle"></i> Görünürlük ayarlarını değiştirin</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 5 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">5</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/5-anything-u-edit-is-displayed-in-listing-page.png' %}" alt="Değişiklikler ilan sayfasında görünür">
+            </div>
+            <div class="tutorial-content">
+              <h4>Değişiklikler Anında Görünür</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Ön yüzde gerçek zamanlı güncelleme</li>
+                <li><i class="fa fa-check-circle"></i> Yeniden derleme veya yenileme gerekmez</li>
+                <li><i class="fa fa-check-circle"></i> Gördüğünüz kadar alırsınız deneyimi</li>
+                <li><i class="fa fa-check-circle"></i> Çok dilli içerik senkronizasyonu</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 6 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">6</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/6-u-can-aslo-edit-pictures.png' %}" alt="Resimleri de düzenleyebilirsiniz">
+            </div>
+            <div class="tutorial-content">
+              <h4>Resimleri de Düzenleyebilirsiniz</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Yerleşik görüntü düzenleyici</li>
+                <li><i class="fa fa-check-circle"></i> Kırpma, döndürme, yeniden boyutlandırma</li>
+                <li><i class="fa fa-check-circle"></i> Filigran ve logo ekleme</li>
+                <li><i class="fa fa-check-circle"></i> Eski markaları kapatma</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 7 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">7</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/7-ites-simple-and-easy.png' %}" alt="Basit ve kolay">
+            </div>
+            <div class="tutorial-content">
+              <h4>Basit ve Kolay</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Sezgisel kullanıcı arayüzü</li>
+                <li><i class="fa fa-check-circle"></i> Teknik beceri gerekmez</li>
+                <li><i class="fa fa-check-circle"></i> Sürükle ve bırak işlevselliği</li>
+                <li><i class="fa fa-check-circle"></i> Hızlı öğrenme eğrisi</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Adım 8 -->
+        <div class="swiper-slide">
+          <div class="tutorial-card">
+            <div class="step-number">8</div>
+            <div class="tutorial-image">
+              <img src="{% static 'tutos/8-save-after-edit-and-thats-it.png' %}" alt="Düzenledikten sonra kaydedin - hepsi bu">
+            </div>
+            <div class="tutorial-content">
+              <h4>Kaydedin - Hepsi Bu!</h4>
+              <ul class="tutorial-points">
+                <li><i class="fa fa-check-circle"></i> Tek tıkla kaydetme butonu</li>
+                <li><i class="fa fa-check-circle"></i> Değişiklikler anında uygulanır</li>
+                <li><i class="fa fa-check-circle"></i> Otomatik yedekleme oluşturulur</li>
+                <li><i class="fa fa-check-circle"></i> Ziyaretçiler için anında hazır</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Navigasyon -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      
+      <!-- Sayfalama -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Eğitim Bölümü Stilleri */
+  .tutorial-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+  }
+  
+  .tutorial-card .step-number {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(163, 131, 68, 0.4);
+  }
+  
+  .tutorial-image {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    background: #1e293b;
+  }
+  
+  .tutorial-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #0f172a;
+  }
+  
+  .tutorial-content {
+    padding: 30px;
+  }
+  
+  .tutorial-content h4 {
+    color: #1e293b;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .tutorial-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tutorial-points li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    color: #475569;
+    font-size: 15px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .tutorial-points li:last-child {
+    border-bottom: none;
+  }
+  
+  .tutorial-points li i {
+    color: #22c55e;
+    font-size: 16px;
+  }
+  
+  /* Swiper Özelleştirme */
+  .tutorialSwiper {
+    padding: 20px 50px 60px !important;
+  }
+  
+  .tutorialSwiper .swiper-slide {
+    opacity: 0.5;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+  }
+  
+  .tutorialSwiper .swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .tutorialSwiper .swiper-button-next,
+  .tutorialSwiper .swiper-button-prev {
+    color: #fff;
+    background: rgba(163, 131, 68, 0.9);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  
+  .tutorialSwiper .swiper-button-next:after,
+  .tutorialSwiper .swiper-button-prev:after {
+    font-size: 20px;
+  }
+  
+  .tutorialSwiper .swiper-button-next:hover,
+  .tutorialSwiper .swiper-button-prev:hover {
+    background: #a38344;
+  }
+  
+  .tutorialSwiper .swiper-pagination-bullet {
+    background: #fff;
+    opacity: 0.5;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .tutorialSwiper .swiper-pagination-bullet-active {
+    background: #a38344;
+    opacity: 1;
+  }
+  
+  @media (max-width: 768px) {
+    .tutorial-image {
+      height: 250px;
+    }
+    
+    .tutorial-content h4 {
+      font-size: 18px;
+    }
+    
+    .tutorialSwiper {
+      padding: 20px 20px 60px !important;
+    }
+    
+    .tutorialSwiper .swiper-button-next,
+    .tutorialSwiper .swiper-button-prev {
+      display: none;
+    }
+  }
+</style>
+
+<!-- CTA Section -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Keşfetmeye Hazır mısınız?</h2>
+    <p>Tüm özellikleri canlı ve işlevsel olan tam platformu deneyimleyin.</p>
+    <div class="cta-buttons">
+      <a href="https://kuzey-emlak.lotfinity.tech" target="_blank" class="cta-btn primary">
+        <i class="fa fa-external-link-alt"></i> Canlı Demoyu Görüntüle
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/tr/properties/" target="_blank" class="cta-btn secondary">
+        <i class="fa fa-building"></i> Mülklere Göz At
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/tr/map/" target="_blank" class="cta-btn secondary">
+        <i class="fa fa-map-marked-alt"></i> İnteraktif Harita
+      </a>
+      <a href="https://kuzey-emlak.lotfinity.tech/api/listings" target="_blank" class="cta-btn secondary">
+        <i class="fa fa-code"></i> API Uç Noktası
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer Note -->
+<div class="section" style="padding: 40px 0; text-align: center; background: #f8fafc;">
+  <div class="container">
+    <p style="color: #64748b; margin: 0;">
+      <strong>Proje Vitrini</strong> • Django ile İnşa Edildi • Aralık 2025
+    </p>
+  </div>
+</div>
+
+<!-- Floating Admin Widget -->
+<div class="admin-float-widget">
+  <a href="/admin" target="_blank" class="admin-float-btn">
+    <i class="fa fa-cog"></i>
+    <span>Yönetici Paneli</span>
+  </a>
+  <div class="admin-credentials-popup">
+    <div class="popup-arrow"></div>
+    <h5><i class="fa fa-key"></i> Giriş Bilgileri</h5>
+    <div class="credential-row">
+      <span class="label">Kullanıcı:</span>
+      <span class="value">hasan</span>
+    </div>
+    <div class="credential-row">
+      <span class="label">Şifre:</span>
+      <span class="value">12345</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .admin-float-widget {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 9999;
+  }
+  
+  .admin-float-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(163, 131, 68, 0.5);
+  }
+  
+  .admin-float-btn:hover {
+    background: linear-gradient(135deg, #a38344, #c9a227);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 50px rgba(163, 131, 68, 0.4);
+    color: #fff;
+  }
+  
+  .admin-float-btn i {
+    font-size: 18px;
+    animation: spin 4s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .admin-credentials-popup {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  
+  .admin-float-widget:hover .admin-credentials-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .popup-arrow {
+    position: absolute;
+    bottom: -8px;
+    right: 30px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    transform: rotate(45deg);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
+  }
+  
+  .admin-credentials-popup h5 {
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .admin-credentials-popup h5 i {
+    color: #a38344;
+  }
+  
+  .credential-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+  }
+  
+  .credential-row .label {
+    color: #64748b;
+    font-size: 13px;
+  }
+  
+  .credential-row .value {
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  @media (max-width: 768px) {
+    .admin-float-widget {
+      bottom: 80px;
+      right: 15px;
+    }
+    
+    .admin-float-btn {
+      padding: 12px 18px;
+      font-size: 12px;
+    }
+    
+    .admin-float-btn span {
+      display: none;
+    }
+    
+    .admin-float-btn i {
+      font-size: 20px;
+    }
+    
+    .admin-credentials-popup {
+      right: -10px;
+      min-width: 200px;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+<script>
+  // Eğitim Swiper'ını Başlat
+  document.addEventListener('DOMContentLoaded', function() {
+    const tutorialSwiper = new Swiper('.tutorialSwiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      centeredSlides: true,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 1.2,
+        },
+        1024: {
+          slidesPerView: 1.5,
+        }
+      },
+      keyboard: {
+        enabled: true,
+      },
+      grabCursor: true,
+    });
+  });
+  
+  // Circular Progress Animation
+  document.addEventListener('DOMContentLoaded', function() {
+    const progressCircle = document.querySelector('.progress-ring-fill');
+    const progressValue = document.querySelector('.progress-value');
+    const targetProgress = 100;
+    const circumference = 2 * Math.PI * 54; // 339.292
+    
+    if (progressCircle && progressValue) {
+      let currentProgress = 0;
+      const duration = 8000; // 8 seconds
+      const startTime = performance.now();
+      
+      function animateProgress(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function (ease-out)
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        currentProgress = Math.round(easedProgress * targetProgress);
+        
+        // Update the stroke
+        const offset = circumference - (easedProgress * targetProgress / 100) * circumference;
+        progressCircle.style.strokeDashoffset = offset;
+        
+        // Update the text
+        progressValue.textContent = currentProgress + '%';
+        
+        if (progress < 1) {
+          requestAnimationFrame(animateProgress);
+        }
+      }
+      
+      // Start animation after a short delay
+      setTimeout(() => {
+        requestAnimationFrame(animateProgress);
+      }, 500);
+    }
+  });
+</script>
+{% endblock %}

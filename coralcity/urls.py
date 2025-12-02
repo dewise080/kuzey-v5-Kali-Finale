@@ -88,6 +88,9 @@ prefixed_urlpatterns = i18n_patterns(
     path('contact/', TemplateView.as_view(template_name='newfrontend/contact.html'), name='new_contact'),
     path('map-copy/', listing_views.new_map_view_copy, name='new_map_copy'),
     path('map-simplified/', xframe_options_exempt(TemplateView.as_view(template_name='newfrontend/mapstandalone/simplified/index.html')), name='new_map_simplified'),
+    # Project showcase page for client presentation
+    path('project-showcase/', TemplateView.as_view(template_name='newfrontend/project-showcase.html'), name='project_showcase'),
+    path('proje-vitrini/', TemplateView.as_view(template_name='newfrontend/project-showcase-tr.html'), name='project_showcase_tr'),
     # 404 preview route so you can check the page without toggling DEBUG
     path('404-preview/', TemplateView.as_view(template_name='newfrontend/page-404.html'), name='new_404_preview'),
     # Include distill URL patterns so static generation covers all languages

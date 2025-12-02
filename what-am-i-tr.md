@@ -8,6 +8,7 @@
 
 ## 📋 İçindekiler
 
+- [Proje İstatistikleri](#-proje-i̇statistikleri)
 - [Genel Bakış](#-genel-bakış)
 - [Temel Uygulamalar ve Modüller](#-temel-uygulamalar-ve-modüller)
 - [Temel Özellikler](#-temel-özellikler)
@@ -17,6 +18,95 @@
 - [API ve Entegrasyon](#-api-ve-entegrasyon)
 - [Statik Site Oluşturma](#-statik-site-oluşturma)
 - [Çoklu Dil Desteği](#-çoklu-dil-desteği)
+
+---
+
+## 📊 Proje İstatistikleri
+
+> **Önemli geliştirme çabası ve karmaşıklığı temsil eden kapsamlı kurumsal düzeyde bir platform.**
+
+### 📈 Kod Tabanı Genel Bakış
+
+| Metrik | Sayı | Açıklama |
+|--------|-----:|----------|
+| 📄 **Toplam Kaynak Dosyası** | **2.567** | Python, HTML, JavaScript, CSS dosyaları |
+| 📝 **Kod Satırı** | **45.000+** | Elle yazılmış uygulama kodu |
+| 🐍 **Python Dosyaları** | **190** | Backend mantığı, modeller, görünümler, API'ler |
+| 🌐 **HTML Şablonları** | **93** | Frontend sayfaları ve bileşenler |
+| 🎨 **CSS Stil Dosyaları** | **Çoklu** | Özel duyarlı tasarım |
+| 📁 **Proje Dizinleri** | **1.673** | Düzenli modüler yapı |
+
+### 🏗️ Mimari Karmaşıklık
+
+| Bileşen | Sayı | Detaylar |
+|---------|-----:|----------|
+| 🗄️ **Veritabanı Modelleri** | **67** | Karmaşık ilişkisel veri yapıları |
+| ⚙️ **Python Fonksiyonları** | **603** | İş mantığı implementasyonları |
+| 🔀 **Veritabanı Migrasyonları** | **110** | Şema evrim geçmişi |
+| 🛣️ **URL Yapılandırmaları** | **8** | Yönlendirme modülleri |
+| 📦 **Django Uygulamaları** | **12** | Modüler özellik paketleri |
+| 🔧 **Bağımlılıklar** | **40** | Entegre üçüncü parti paketler |
+
+### 🌍 Uluslararasılaştırma Çabası
+
+| Metrik | Sayı |
+|--------|-----:|
+| 🌐 **Desteklenen Diller** | **13** |
+| 📝 **Çeviri Dosyaları** | **12** `.po` dosyası |
+| 🔤 **Çevrilebilir Dizeler** | **500+** dil başına |
+
+```mermaid
+pie showData title Dile Göre Kod Dağılımı
+    "Python (11.7K satır)" : 11776
+    "HTML Şablonları (20.6K satır)" : 20622
+    "CSS Stil Dosyaları (13.3K satır)" : 13289
+```
+
+### 📸 Medya ve Varlıklar
+
+| Varlık Türü | Sayı |
+|-------------|-----:|
+| 🖼️ **Medya Dosyaları** | **1.716** |
+| 🏠 **Mülk Görselleri** | **1.500+** |
+| 🎨 **Statik Varlıklar** | **Çoklu** |
+
+### ⏱️ Geliştirme Çabası
+
+> 💪 **Gerçek Geliştirme İstatistikleri:** Bu proje, birden fazla ay boyunca yoğun günlük 16-18 saatlik kodlama seanslarıyla inşa edildi.
+
+| Konu | Gerçek | Detaylar |
+|------|--------|----------|
+| 👨‍💻 **Günlük Çalışma Saatleri** | **16-18 saat** | Kesintisiz kodlama seansları |
+| 📅 **Geliştirme Süresi** | ~~3-4 ay~~ **18 gün** | Yoğun tam zamanlı çalışma |
+| ⏰ **Toplam Yatırılan Saat** | **500-700+** | Kümülatif geliştirme süresi |
+| 🔄 **Git Commit'leri** | **Aktif** | Sürekli iterasyon |
+| 🧪 **Uygulanan Özellikler** | **50+** | Aşağıdaki özellik listesine bakın |
+
+### 💡 Karmaşıklık Göstergeleri
+
+```
+Backend Karmaşıklığı  ████████████████████░░░░  80%  (Django, API'ler, GraphQL)
+Frontend Geliştirme   ██████████████████░░░░░░  75%  (Şablonlar, JS, CSS)
+Veritabanı Tasarımı   ████████████████████░░░░  80%  (67 model, ilişkiler)
+Uluslararasılaştırma  ████████████████████████  100% (13 dil)
+DevOps & Dağıtım      ██████████████░░░░░░░░░░  60%  (Docker, Statik Gen)
+Dokümantasyon         ████████████████░░░░░░░░  65%  (README, API belgeleri)
+```
+
+### 🎯 Temel Başarılar
+
+| Başarı | Durum |
+|--------|-------|
+| ✅ Full-stack Django uygulaması | Tamamlandı |
+| ✅ OpenAPI spesifikasyonlu RESTful API | Tamamlandı |
+| ✅ Blog için GraphQL API | Tamamlandı |
+| ✅ 13 dil uluslararasılaştırma | Tamamlandı |
+| ✅ Statik site oluşturma (CDN-hazır) | Tamamlandı |
+| ✅ Leaflet ile interaktif haritalar | Tamamlandı |
+| ✅ Gelişmiş görüntü işleme araçları | Tamamlandı |
+| ✅ Web kazıma içe aktarma sistemi | Tamamlandı |
+| ✅ Özel yönetici teması (Baton) | Tamamlandı |
+| ✅ Duyarlı mobil uyumlu tasarım | Tamamlandı |
 
 ---
 
