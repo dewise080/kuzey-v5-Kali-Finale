@@ -19,8 +19,8 @@ RUN python -m pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
-# Collect static files (including Baton admin styles) during build
-RUN python manage.py collectstatic --noinput
+# Static files are pre-collected locally and committed to the repo
+# No need to run collectstatic during Docker build
 
 EXPOSE 8000
 
