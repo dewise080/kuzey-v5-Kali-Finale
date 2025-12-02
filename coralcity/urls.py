@@ -57,6 +57,13 @@ urlpatterns = [
     path('api/listings', __import__('api.views', fromlist=['']).listings_geo, name='api_listings_geo'),
     path('api/listings/<int:pk>', __import__('api.views', fromlist=['']).listing_geo_detail, name='api_listing_geo_detail'),
     path('api/openapi.json', __import__('api.views', fromlist=['']).openapi_spec, name='api_openapi_spec'),
+    
+    # Chatbot API endpoints - AI-friendly read-only endpoints for customer service bots
+    path('api/bot/search', __import__('api.chatbot_api', fromlist=['']).chatbot_listings_search, name='chatbot_listings_search'),
+    path('api/bot/listing/<int:pk>', __import__('api.chatbot_api', fromlist=['']).chatbot_listing_detail, name='chatbot_listing_detail'),
+    path('api/bot/stats', __import__('api.chatbot_api', fromlist=['']).chatbot_listings_stats, name='chatbot_listings_stats'),
+    path('api/bot/locations', __import__('api.chatbot_api', fromlist=['']).chatbot_locations, name='chatbot_locations'),
+    path('api/bot/docs', __import__('api.chatbot_api', fromlist=['']).chatbot_api_docs, name='chatbot_api_docs'),
 ]
 
 if _has_graphql:
