@@ -153,7 +153,7 @@ body {
 .section-heading h6 {
   font-family: "Tangerine", cursive!important;
   color: black;
-  font-size: 45px;
+  font-size: 60px;
   font-weight: 900;
 }
 
@@ -959,12 +959,12 @@ body {
 
 .featured .info-table ul li h4 {
   font-size: 22px;
+  color: a38344;
   font-weight: 600;
 }
 
 .featured .info-table ul li h4 span {
   font-size: 15px;
-  color: #aaa;
   font-weight: 400;
 }
 
@@ -1208,8 +1208,9 @@ body {
 }
 
 .properties .item ul li span {
+  font-size: 15px;
   font-weight: 600;
-  color: a38344;
+  color: #a38344;
 }
 
 .properties .item ul {
@@ -1455,13 +1456,13 @@ footer p a:hover {
 }
 
 .properties ul.properties-filter li a.is_active {
-  background-color: #a38344;
-  color: #000000;
+  background-color: #ffc107;
   font-weight:50;
 }
 
 .properties ul.properties-filter li a.is_active:hover {
-  color: #000000;
+  color: #ffc107;
+  font-weight: 25px
 }
 
 .properties ul.properties-filter li a:hover {
@@ -1800,7 +1801,7 @@ body {
   }
   .properties .item h6 {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
   .properties .item .main-button {
     text-align: center;

@@ -1,14 +1,7 @@
-@font-face {
-	font-family: 'Yekan';
-    src:		url('../../app/dist/7a71a48e0bbd982d07192d15f.ttf') format('truetype');
-    font-weight: normal;
-	font-style: normal;
-	text-rendering: optimizeLegibility;
-	font-display: auto;
-}
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap');
 
 *, body, h1, h2, h3, h4, h5, h6, p, a, input, input::placeholder, select, option {
-	font-family: "Yekan";
+	font-family: "Vazirmatn", sans-serif;
 }
 .sidebar-menu ul li a i::before{
     margin-left: 12px;
