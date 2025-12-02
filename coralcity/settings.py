@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     # Include existing trusted origins
     "https://*.lotfinity.tech", # Use a wildcard for subdomains if applicable
-    "https://kuzey-admin.lotfinity.tech", # Explicitly add the specific origin
+    "https://kuzey-emlak.lotfinity.tech", # Explicitly add the specific origin
     # You might also need to include your local development server, e.g.,
     # "http://127.0.0.1:8000",
 ]

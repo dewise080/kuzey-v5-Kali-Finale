@@ -2,6 +2,8 @@
 
 > A modern, feature-rich Django-based real estate web application with multi-language support, interactive maps, blog system, static site generation, and sophisticated admin capabilities.
 
+🌐 **Live Demo:** [https://kuzey-emlak.lotfinity.tech](https://kuzey-emlak.lotfinity.tech)
+
 ---
 
 ## 📋 Table of Contents
@@ -23,6 +25,18 @@
 **CoralCity** is a sophisticated, full-featured real estate management platform built on Django. It enables real estate agencies to manage property listings, realtors, customer inquiries, and blog content through an elegant admin interface while providing users with a modern frontend experience complete with interactive maps, property search, and contact functionality.
 
 The platform supports **13 languages**, offers **static site generation** for CDN deployment, and includes advanced **image processing tools** for watermarking and editing property photos.
+
+### 🚀 Quick Links - Try It Now!
+
+| Page | Link |
+|------|------|
+| 🏠 **Homepage** | [https://kuzey-emlak.lotfinity.tech](https://kuzey-emlak.lotfinity.tech) |
+| 🏢 **All Properties** | [https://kuzey-emlak.lotfinity.tech/en/properties/](https://kuzey-emlak.lotfinity.tech/en/properties/) |
+| 🗺️ **Interactive Map** | [https://kuzey-emlak.lotfinity.tech/en/map/](https://kuzey-emlak.lotfinity.tech/en/map/) |
+| 💳 **Financing** | [https://kuzey-emlak.lotfinity.tech/en/financing/](https://kuzey-emlak.lotfinity.tech/en/financing/) |
+| 📧 **Contact** | [https://kuzey-emlak.lotfinity.tech/en/contact/](https://kuzey-emlak.lotfinity.tech/en/contact/) |
+| 📡 **API Listings** | [https://kuzey-emlak.lotfinity.tech/api/listings](https://kuzey-emlak.lotfinity.tech/api/listings) |
+| 📖 **OpenAPI Spec** | [https://kuzey-emlak.lotfinity.tech/api/openapi.json](https://kuzey-emlak.lotfinity.tech/api/openapi.json) |
 
 ---
 
@@ -113,13 +127,13 @@ Advanced image processing utilities.
 ### 9. **API** (`api/`)
 RESTful API endpoints.
 
-| Endpoint | Description |
-|----------|-------------|
-| `/api/listings` | GeoJSON listing data with coordinates |
-| `/api/listings/<id>` | Single listing geo-details |
-| `/api/openapi.json` | OpenAPI 3.1 specification |
-| Spatial filtering | Bounding box (bbox) query support |
-| CORS enabled | Cross-origin access allowed |
+| Endpoint | Description | Try It Live |
+|----------|-------------|-------------|
+| `/api/listings` | GeoJSON listing data with coordinates | [🔗 View](https://kuzey-emlak.lotfinity.tech/api/listings) |
+| `/api/listings/<id>` | Single listing geo-details | [🔗 Example](https://kuzey-emlak.lotfinity.tech/api/listings/1) |
+| `/api/openapi.json` | OpenAPI 3.1 specification | [🔗 Spec](https://kuzey-emlak.lotfinity.tech/api/openapi.json) |
+| Spatial filtering | Bounding box (bbox) query support | - |
+| CORS enabled | Cross-origin access allowed | - |
 
 ### 10. **Ages** (`Ages/`)
 Age verification module for restricted content.
@@ -129,6 +143,9 @@ Age verification module for restricted content.
 ## ✨ Key Features
 
 ### 🗺️ Interactive Maps
+
+👉 **[View Live Map](https://kuzey-emlak.lotfinity.tech/en/map/)** | **[Simplified Map](https://kuzey-emlak.lotfinity.tech/en/map-simplified/)**
+
 - **Leaflet.js integration** with custom markers
 - **Property location mapping** with photo markers
 - **Nearby amenities display**:
@@ -144,6 +161,9 @@ Age verification module for restricted content.
 - **Pre-generated map HTML** for each listing
 
 ### 🔍 Advanced Property Search
+
+👉 **[Browse All Properties](https://kuzey-emlak.lotfinity.tech/en/properties/)**
+
 - Keyword search in descriptions
 - City/State filtering
 - Bedroom count filter
@@ -215,16 +235,16 @@ query {
 ## 👤 User Capabilities
 
 ### Public Users (No Login Required)
-| Action | Description |
-|--------|-------------|
-| 🏠 Browse listings | View all published properties with pagination |
-| 🔍 Search properties | Filter by keywords, location, price, bedrooms |
-| 📍 View on map | Interactive map with all listing locations |
-| 📄 Property details | Full property information with photo gallery |
-| 🗺️ Nearby amenities | See transport, shops, services near property |
-| 📰 Read blog | Browse articles by category |
-| 🌐 Change language | Switch between 13 supported languages |
-| 💰 Financing info | View financing/mortgage information page |
+| Action | Description | Try It |
+|--------|-------------|--------|
+| 🏠 Browse listings | View all published properties with pagination | [Properties →](https://kuzey-emlak.lotfinity.tech/en/properties/) |
+| 🔍 Search properties | Filter by keywords, location, price, bedrooms | [Properties →](https://kuzey-emlak.lotfinity.tech/en/properties/) |
+| 📍 View on map | Interactive map with all listing locations | [Map →](https://kuzey-emlak.lotfinity.tech/en/map/) |
+| 📄 Property details | Full property information with photo gallery | [Example →](https://kuzey-emlak.lotfinity.tech/en/listing/1/) |
+| 🗺️ Nearby amenities | See transport, shops, services near property | [Map →](https://kuzey-emlak.lotfinity.tech/en/map/) |
+| 📰 Read blog | Browse articles by category | Coming Soon |
+| 🌐 Change language | Switch between 13 supported languages | [🇹🇷 Turkish](https://kuzey-emlak.lotfinity.tech/tr/) \| [🇩🇪 German](https://kuzey-emlak.lotfinity.tech/de/) |
+| 💰 Financing info | View financing/mortgage information page | [Financing →](https://kuzey-emlak.lotfinity.tech/en/financing/) |
 
 ### Registered Users
 | Action | Description |
@@ -286,6 +306,12 @@ query {
 ## 🔗 API & Integration
 
 ### REST API Endpoints
+
+| Endpoint | Live Link |
+|----------|----------|
+| `GET /api/listings` | [https://kuzey-emlak.lotfinity.tech/api/listings](https://kuzey-emlak.lotfinity.tech/api/listings) |
+| `GET /api/listings?limit=10` | [https://kuzey-emlak.lotfinity.tech/api/listings?limit=10](https://kuzey-emlak.lotfinity.tech/api/listings?limit=10) |
+| `GET /api/openapi.json` | [https://kuzey-emlak.lotfinity.tech/api/openapi.json](https://kuzey-emlak.lotfinity.tech/api/openapi.json) |
 
 ```
 GET /api/listings
@@ -364,21 +390,21 @@ bash scripts/build_static.sh [--zip]
 
 ### Supported Languages (13)
 
-| Code | Language |
-|------|----------|
-| 🇬🇧 `en` | English |
-| 🇹🇷 `tr` | Türkçe |
-| 🇫🇷 `fr` | Français |
-| 🇪🇸 `es` | Español |
-| 🇮🇹 `it` | Italiano |
-| 🇵🇱 `pl` | Polski |
-| 🇵🇹 `pt` | Português |
-| 🇭🇺 `hu` | Magyar |
-| 🇷🇺 `ru` | Русский |
-| 🇸🇦 `ar` | العربية |
-| 🇩🇪 `de` | Deutsch |
-| 🇧🇬 `bg` | български |
-| 🇳🇱 `nl` | Nederlands |
+| Code | Language | Live Link |
+|------|----------|----------|
+| 🇬🇧 `en` | English | [→ Visit](https://kuzey-emlak.lotfinity.tech/en/) |
+| 🇹🇷 `tr` | Türkçe | [→ Visit](https://kuzey-emlak.lotfinity.tech/tr/) |
+| 🇫🇷 `fr` | Français | [→ Visit](https://kuzey-emlak.lotfinity.tech/fr/) |
+| 🇪🇸 `es` | Español | [→ Visit](https://kuzey-emlak.lotfinity.tech/es/) |
+| 🇮🇹 `it` | Italiano | [→ Visit](https://kuzey-emlak.lotfinity.tech/it/) |
+| 🇵🇱 `pl` | Polski | [→ Visit](https://kuzey-emlak.lotfinity.tech/pl/) |
+| 🇵🇹 `pt` | Português | [→ Visit](https://kuzey-emlak.lotfinity.tech/pt/) |
+| 🇭🇺 `hu` | Magyar | [→ Visit](https://kuzey-emlak.lotfinity.tech/hu/) |
+| 🇷🇺 `ru` | Русский | [→ Visit](https://kuzey-emlak.lotfinity.tech/ru/) |
+| 🇸🇦 `ar` | العربية | [→ Visit](https://kuzey-emlak.lotfinity.tech/ar/) |
+| 🇩🇪 `de` | Deutsch | [→ Visit](https://kuzey-emlak.lotfinity.tech/de/) |
+| 🇧🇬 `bg` | български | [→ Visit](https://kuzey-emlak.lotfinity.tech/bg/) |
+| 🇳🇱 `nl` | Nederlands | [→ Visit](https://kuzey-emlak.lotfinity.tech/nl/) |
 
 ### Features
 - **URL prefix per language** (`/en/`, `/tr/`, `/fr/`, etc.)
