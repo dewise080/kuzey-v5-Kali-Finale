@@ -1,0 +1,190 @@
+{
+  "count": 23,
+  "directory": "distill_out/simplified/contexts",
+  "items": [
+    {
+      "file": "listing_17_context.json",
+      "listing_id": "17",
+      "title": "KİRALIKDAİRE ESENYURT METROBÜSE YAKIN 1+1",
+      "bytes": 92225,
+      "mtime": 1763700107,
+      "sha256": "949c9182fd726e5d134756d9cce1c79b82e64e6df8c9943baca72595d27c2f57"
+    },
+    {
+      "file": "listing_18_context.json",
+      "listing_id": "18",
+      "title": "BEYLİKDÜZÜ SATILIK 4+2 DUBLEKS - FİYAT DÜŞTÜ",
+      "bytes": 64778,
+      "mtime": 1763700105,
+      "sha256": "d113f2cf3c958fa5e428272afb55a12ea3ad414cee3a0b116d6fd32c19a843a6"
+    },
+    {
+      "file": "listing_19_context.json",
+      "listing_id": "19",
+      "title": "ESENYURT 3+1 SATILIK SIFIR DAİRE - KELEPİR",
+      "bytes": 83492,
+      "mtime": 1763700098,
+      "sha256": "3d1e5aff174bb3793d6f82c8536813f1580e9ac64a2b9f3ef3448898254b867a"
+    },
+    {
+      "file": "listing_20_context.json",
+      "listing_id": "20",
+      "title": "ESENYURT SATLIK DAİRE 2+1 BAHÇEKATI",
+      "bytes": 96368,
+      "mtime": 1763700096,
+      "sha256": "782887e6fca0e69a336447a28fa72eff227b80278da50f7ea4b5a45b22806cc5"
+    },
+    {
+      "file": "listing_21_context.json",
+      "listing_id": "21",
+      "title": "EŞYALI KİRALIK DAİRE ESENYURT",
+      "bytes": 100087,
+      "mtime": 1763700095,
+      "sha256": "d0eb1aa02239f63d3165f995f8b0f220209206c00f1f475a1a33879783b6d2c9"
+    },
+    {
+      "file": "listing_22_context.json",
+      "listing_id": "22",
+      "title": "HADIMKÖY YANINDA KARAAĞAÇDA KİRALIK FABRİKA DEPO ÜRETİM ALANI",
+      "bytes": 188841,
+      "mtime": 1763700103,
+      "sha256": "06d1bc89371f993ee1fb33b649469b3b862d6e67073ea39a9373818635ccb3f4"
+    },
+    {
+      "file": "listing_23_context.json",
+      "listing_id": "23",
+      "title": "ESENYURT 1+1 SATILIK DAİRE SİTE İÇERİSİNDE",
+      "bytes": 99867,
+      "mtime": 1763700093,
+      "sha256": "13968fb6b4f6853dcdbc9da427a24825385c2ef98a0b9b3fc7fc52939e120680"
+    },
+    {
+      "file": "listing_25_context.json",
+      "listing_id": "25",
+      "title": "ESENYURT ACİL SATILIK 3+1 GENİŞ YENİ DAİRE - MERKEZİ LOKASYONDA",
+      "bytes": 89950,
+      "mtime": 1763700089,
+      "sha256": "8ad369992267d003c6ccc2d48aab411bc03b74fc009f3ddfec8476769fcb39c2"
+    },
+    {
+      "file": "listing_26_context.json",
+      "listing_id": "26",
+      "title": "ESENYURT MEHMET AKİFERSOY MH BAHÇEKATI KİRALIK METOBÜSE YAKIN",
+      "bytes": 84621,
+      "mtime": 1763700085,
+      "sha256": "e3823d746f459e147a2e398bd3300dfb8ea42bf1af4f3e04cf859ed4bfe68878"
+    },
+    {
+      "file": "listing_27_context.json",
+      "listing_id": "27",
+      "title": "KİRALIK 1+1 EŞYALI , METROBÜSE 6 DK YÜRÜME MESAFESİNDE",
+      "bytes": 83804,
+      "mtime": 1763700082,
+      "sha256": "5e6cabd389851fe90e16727282a06ab3af708825860f5450e6ddd3bf99205189"
+    },
+    {
+      "file": "listing_28_context.json",
+      "listing_id": "28",
+      "title": "EŞYALI KİRALIK VİLLA BEYLİKDÜZÜ",
+      "bytes": 54656,
+      "mtime": 1763700084,
+      "sha256": "b61633d538ff8afaae8c35edca1c6d62ee60b2df9d265ab34c0a3d3cf3aa468f"
+    },
+    {
+      "file": "listing_29_context.json",
+      "listing_id": "29",
+      "title": "METROBÜSE YAKIN 3+1 SATILIK DAİRE ESENYURT",
+      "bytes": 56631,
+      "mtime": 1763721308,
+      "sha256": "a0cc7e8ae9b2e03c5dbf59d979e1c18e652b75faecf009e390a57d52708697b3"
+    },
+    {
+      "file": "listing_30_context.json",
+      "listing_id": "30",
+      "title": "ESENYURT ACİL SATILIK 3+1 GENİŞ YENİ DAİRE - MERKEZİ LOKASYONDA",
+      "bytes": 89950,
+      "mtime": 1763700087,
+      "sha256": "16f96ae3b2695a663689e8dee7c3270cbe050c047817a8ef62c1b5e5d207d8a9"
+    },
+    {
+      "file": "listing_31_context.json",
+      "listing_id": "31",
+      "title": "METROBÜSE YAKIN SATILIK DAİRE 2+1",
+      "bytes": 86532,
+      "mtime": 1763700080,
+      "sha256": "7adc7478605a3009dea26a70ef1422f0b5c689e048b0703d88aa91247fb52fe4"
+    },
+    {
+      "file": "listing_32_context.json",
+      "listing_id": "32",
+      "title": "KAVAKLI MERKEZDE KİRALIK DÜKKAN 2 KATLI - 110 M2",
+      "bytes": 70116,
+      "mtime": 1763700078,
+      "sha256": "44e2d459e3114ae5e449684a440ad60f3655d3818ec6e5652d448d37cc875a25"
+    },
+    {
+      "file": "listing_34_context.json",
+      "listing_id": "34",
+      "title": "ESENYURT MEHMET AKİFERSOY MH SATILIK DAİRE",
+      "bytes": 89983,
+      "mtime": 1763700077,
+      "sha256": "d3d3e2d8abb38abb576c1d0f4e876e5257b26657414c80a3735f1e9c75e3b1ef"
+    },
+    {
+      "file": "listing_35_context.json",
+      "listing_id": "35",
+      "title": "EŞYALI KİRALIK DAİRE 2+1",
+      "bytes": 57808,
+      "mtime": 1763721309,
+      "sha256": "501081f2382f37bb1268718d55da2586c1e1e7b772bc767cfa086ed0b9b62647"
+    },
+    {
+      "file": "listing_36_context.json",
+      "listing_id": "36",
+      "title": "1+1 KİRALIK EŞYALIK DAİRE , HAMAM , SAUNA , SPOR SALONLU SİTEDE",
+      "bytes": 60380,
+      "mtime": 1763721307,
+      "sha256": "cff8c43d2b4f00cf12a1c3766387c4d1d7b1d6f887d39f269834fbeb38d1cb2d"
+    },
+    {
+      "file": "listing_37_context.json",
+      "listing_id": "37",
+      "title": "KİRALIK VİLLA GÜLPINAR DEREAĞZI MH",
+      "bytes": 72552,
+      "mtime": 1763721306,
+      "sha256": "16a154e3daba590c9a8851adfa31e1cdfbf30e1936a0e4965a4ee070f45d99f4"
+    },
+    {
+      "file": "listing_38_context.json",
+      "listing_id": "38",
+      "title": "BAHÇEŞEHİR MAXİMOON EVLERİNDE 2+1 DAİRE TEMİZ EŞYALI SİTE İÇİNDE",
+      "bytes": 161879,
+      "mtime": 1763700100,
+      "sha256": "e29ab577e48b18820435a54059afdd8af2d40b15dc76c8d9e0d953ac723a7f32"
+    },
+    {
+      "file": "listing_39_context.json",
+      "listing_id": "39",
+      "title": "CROWN TOWER SİTESİNDE 1+1 BOŞ KİRALIK DAİRE",
+      "bytes": 82405,
+      "mtime": 1763700091,
+      "sha256": "a2a159332754edf6049fc0cd4342ca497547e51e54a05fa0be2ebbd378d24aaa"
+    },
+    {
+      "file": "listing_9_context.json",
+      "listing_id": "9",
+      "title": "EŞYALI 1+1 DAİRE",
+      "bytes": 92324,
+      "mtime": 1763700109,
+      "sha256": "7dbe8b64f0f31b99d9c8281b63e810638c4853254b8379b57fc249e642eba398"
+    },
+    {
+      "file": "listing_fatih-sample-1_context.json",
+      "listing_id": "fatih-sample-1",
+      "title": "Sample Fatih Test",
+      "bytes": 48360,
+      "mtime": 1763721305,
+      "sha256": "f1175f4bcc8cd985f6baf6dcbc620510814faaabfadbe15146122958704b22c5"
+    }
+  ]
+}

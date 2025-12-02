@@ -1,0 +1,24 @@
+<style>
+  html,body,#map{height:100%;margin:0} .badge{position:absolute;top:8px;left:8px;background:#fff;padding:6px 10px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.15);z-index:1000;font:14px/1.4 system-ui}
+  /* Preserve logo aspect ratio when enabled */
+  .ipt-icon{max-width:24px;max-height:24px;width:auto !important;height:auto !important}
+  .ipt-icon.listing{max-width:28px;max-height:28px}
+  /* Per-layer size overrides */
+  .ipt-icon.metrobus{max-width:18px;max-height:18px}
+  .ipt-icon.taxi{max-width:18px;max-height:18px}
+  .ipt-icon.grocery{max-width:18px;max-height:18px}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<div id="map"></div>
+<div class="badge">EŞYALI 1+1 DAİRE • 15,500 TL</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // Initialize map only if DATA is defined (from main map file)
+  if (typeof DATA !== 'undefined' && !window.mapInitialized) {
+    window.mapInitialized = true;
+    // Map initialization code here
+    const map = L.map('map').setView([DATA.listing.lat, DATA.listing.lng], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(map);
+    // Add layers based on DATA
+  }
+</script>

@@ -1,0 +1,304 @@
+{% extends 'newfrontend/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load humanize %}
+{% load i18n %}
+
+{% block nav_details_active %}active{% endblock %}
+{% block title %}{{ listing.title }} - {% trans "Property Details" %}{% endblock %}
+
+{% block content %}
+  <!-- 1. Styles -->
+  <style>
+    .swiper {
+      width: 100%;
+      height: 500px;
+      border-radius: 50px;
+      margin-bottom: 30px;
+    }
+
+    .swiper-wrapper { display: flex; transition: transform 400ms ease; }
+    .swiper-slide { min-width: 100%;
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Autoplay Progress Circle Styles */
+    .autoplay-progress {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 10;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--swiper-theme-color);
+    }
+
+    .autoplay-progress svg {
+      --progress: 0;
+      position: absolute;
+      left: 0;
+      top: 0px;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      stroke-width: 4px;
+      stroke: var(--swiper-theme-color);
+      fill: none;
+      stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+      stroke-dasharray: 125.6;
+      transform: rotate(-90deg);
+      color: #a38344
+    }
+
+    /* Simple pagination dots */
+    .swiper-pagination-bullet-active {
+        background-color: var(--swiper-theme-color);
+    }
+    .swiper-button-next, .swiper-button-prev {
+      position: absolute; z-index: 5; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.85);
+      display: grid; place-items: center; cursor: pointer; user-select: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    }
+    .swiper-button-next { right: 12px; color: #a38344 }
+    .swiper-button-prev { left: 12px; color: #a38344 }
+  </style>
+
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'new_index' %}">{% trans "Home" %}</a>  /  {% trans "Property" %}</span>
+          <h3>{{ listing.title }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-property section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+
+          <!-- 2. Swiper Structure -->
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              {% with imgs=listing.visible_images %}
+                {% if imgs %}
+                  {% for im in imgs %}
+                    <div class="swiper-slide">
+                      {% thumbnail im.image 'detail' as imdetail %}
+                      <img src="{{ imdetail.url }}" width="{{ imdetail.width }}" height="{{ imdetail.height }}" alt="{{ listing.title }}">
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <!-- Fallback image -->
+                  <div class="swiper-slide">
+                    <img src="{% static 'newfront/assets/images/property-01.jpg' %}" alt="{{ listing.title }}">
+                  </div>
+                {% endif %}
+              {% endwith %}
+            </div>
+
+            <!-- Navigation Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+            <!-- Pagination Dots (Added Here) -->
+            <div class="swiper-pagination"></div>
+
+            <!-- Autoplay Progress Circle -->
+            <div class="autoplay-progress" style="margin-right:6px; color: #a38344">
+              <svg viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="20"></circle>
+              </svg>
+              <span></span>
+            </div>
+          </div>
+          <!-- End Swiper -->
+
+          <div class="main-content">
+            <span class="category">{{ listing.get_deal_type_display }} {{ listing.property_type }}</span>
+            <h4>{{ listing.address }}</h4>
+            <p>{{ listing.description }}</p>
+          </div>
+
+          <!-- Property details accordion styled by templatemo-villa-agency.css -->
+          <div class="accordion" id="propertyAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingDetails">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails">
+                  {% trans "Property Details" %}
+                </button>
+              </h2>
+              <div id="collapseDetails" class="accordion-collapse collapse show" aria-labelledby="headingDetails" data-bs-parent="#propertyAccordion">
+                <div class="accordion-body">
+                  <div class="row g-3">
+                    <div class="col-6"><i class="fa fa-tags" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Deal Type:" %}</strong> {{ listing.get_deal_type_display }}</div>
+                    <div class="col-6"><i class="fa fa-home" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Type:" %}</strong> {{ listing.property_type|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-th-large" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Rooms:" %}</strong> {{ listing.rooms_text|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-bed" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Bedrooms:" %}</strong> {{ listing.bedrooms|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-bath" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Bathrooms:" %}</strong> {{ listing.bathrooms|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-ruler-combined" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Net m²:" %}</strong> {{ listing.m2_net|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-ruler-combined" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Gross m²:" %}</strong> {{ listing.m2_gross|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-ruler" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Area (sqft):" %}</strong> {{ listing.sqft|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-hourglass-half" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Building Age:" %}</strong> {{ listing.building_age|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-building" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Floor:" %}</strong> {{ listing.floor_number|default:'-' }} / {{ listing.floors_total|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-fire" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Heating:" %}</strong> {{ listing.heating|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-utensils" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Kitchen:" %}</strong> {{ listing.kitchen_type|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-door-open" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Balcony:" %}</strong> {{ listing.balcony|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-parking" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Parking:" %}</strong> {{ listing.parking_area|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-info-circle" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Usage Status:" %}</strong> {{ listing.usage_status|default:'-' }}</div>
+                    <div class="col-6"><i class="fa fa-city" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Complex:" %}</strong> {% if listing.in_complex %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}{% if listing.complex_name %} — {{ listing.complex_name }}{% endif %}</div>
+                    <div class="col-6"><i class="fa fa-caret-square-up" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Elevator:" %}</strong> {% if listing.elevator %}{% trans "Yes" %}{% elif listing.elevator is not None %}{% trans "No" %}{% else %}-{% endif %}</div>
+                    <div class="col-6"><i class="fa fa-couch" aria-hidden="true" style="margin-right:6px; color: #a38344"></i><strong>{% trans "Furnished:" %}</strong> {% if listing.furnished %}{% trans "Yes" %}{% elif listing.furnished is not None %}{% trans "No" %}{% else %}-{% endif %}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFees">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFees" aria-expanded="false" aria-controls="collapseFees">
+                  {% trans "Fees & Listing Info" %}
+                </button>
+              </h2>
+              <div id="collapseFees" class="accordion-collapse collapse" aria-labelledby="headingFees" data-bs-parent="#propertyAccordion">
+                <div class="accordion-body">
+                  <div class="row g-3">
+                    <div class="col-6"><strong>{% trans "Maintenance Fee (Aidat):" %}</strong> {{ listing.maintenance_fee|default:'-' }}</div>
+                    <div class="col-6"><strong>{% trans "Deposit:" %}</strong> {{ listing.deposit|default:'-' }}</div>
+                    <div class="col-6"><strong>{% trans "Deed Status:" %}</strong> {{ listing.deed_status|default:'-' }}</div>
+                    <div class="col-6"><strong>{% trans "From Whom:" %}</strong> {{ listing.from_whom|default:'-' }}</div>
+                    <div class="col-6"><strong>{% trans "Listing ID:" %}</strong> {{ listing.external_id|default:listing.id }}</div>
+                    <div class="col-6"><strong>{% trans "Ad Date:" %}</strong> {{ listing.ad_date|default:listing.list_date|date:'Y-m-d' }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="info-table">
+            <ul>
+              <li>
+                <img src="{% static 'newfront/assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
+                <h4>{% trans "Price" %}<br><span>₺{{ listing.price|intcomma }}</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'newfront/assets/images/info-icon-02.png' %}" alt="" style="max-width: 52px;">
+                <h4>{% trans "Bedrooms" %}<br><span>{{ listing.bedrooms }}</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'newfront/assets/images/info-icon-03.png' %}" alt="" style="max-width: 52px;">
+                <h4>{% trans "Bathrooms" %}<br><span>{{ listing.bathrooms }}</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'newfront/assets/images/info-icon-04.png' %}" alt="" style="max-width: 52px;">
+                <h4>{% trans "Location" %}<br><span>{{ listing.city }}, {{ listing.state }}</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'newfront/assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
+                <h4>{% trans "Size (Gross m²)" %}<br><span>{{ listing.m2_gross|default:'-' }}</span></h4>
+              </li>
+              <li>
+                <img src="{% static 'newfront/assets/images/info-icon-01.png' %}" alt="" style="max-width: 52px;">
+                <h4>{% trans "Elevator" %}<br><span>{% if listing.elevator %}{% trans "Yes" %}{% elif listing.elevator is not None %}{% trans "No" %}{% else %}-{% endif %}</span></h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+  <!-- 3. Lightweight Carousel (no external deps) -->
+  <script>
+    (function(){
+      var root = document.querySelector('.mySwiper');
+      if (!root) return;
+      var wrapper = root.querySelector('.swiper-wrapper');
+      var slides = wrapper ? Array.from(wrapper.children) : [];
+      if (!wrapper || !slides.length) return;
+
+      var btnNext = root.querySelector('.swiper-button-next');
+      var btnPrev = root.querySelector('.swiper-button-prev');
+      var dotsWrap = root.querySelector('.swiper-pagination');
+      if (btnNext && !btnNext.textContent.trim()) btnNext.textContent = '›';
+      if (btnPrev && !btnPrev.textContent.trim()) btnPrev.textContent = '‹';
+
+      var index = 0;
+      function update(){
+        wrapper.style.transform = 'translateX(' + (-index * 100) + '%)';
+        if (!dotsWrap) return;
+        var dots = dotsWrap.querySelectorAll('.swiper-pagination-bullet');
+        dots.forEach(function(d,i){ d.classList.toggle('swiper-pagination-bullet-active', i===index); });
+      }
+
+      // Build dots
+      if (dotsWrap){
+        dotsWrap.innerHTML = slides.map(function(_,i){ return '<span class="swiper-pagination-bullet'+(i===0?' swiper-pagination-bullet-active':'')+'"></span>'; }).join('');
+        dotsWrap.querySelectorAll('.swiper-pagination-bullet').forEach(function(d,i){ d.addEventListener('click', function(){ index=i; update(); }); });
+      }
+
+      function go(delta){ index = (index + delta + slides.length) % slides.length; update(); }
+      if (btnNext) btnNext.addEventListener('click', function(){ go(1); });
+      if (btnPrev) btnPrev.addEventListener('click', function(){ go(-1); });
+
+      // Autoplay with progress
+      var progressCircle = document.querySelector('.autoplay-progress svg');
+      var progressContent = document.querySelector('.autoplay-progress span');
+      var delay = 4000; var started = Date.now();
+      function tick(){
+        var t = (Date.now() - started) % delay;
+        var left = delay - t;
+        var progress = t / delay;
+        if (progressCircle) progressCircle.style.setProperty('--progress', 1 - progress);
+        if (progressContent) progressContent.textContent = Math.ceil(left / 1000) + 's';
+        if (t < 50) { go(1); }
+        requestAnimationFrame(tick);
+      }
+      // Kick off autoplay after first cycle boundary
+      setTimeout(function(){ started = Date.now(); requestAnimationFrame(tick); }, delay);
+      update();
+    })();
+  </script>
+  <style>
+    /* Map embed styles */
+    .property-map-embed { width: 100%; height: 520px; margin-top: 24px; border-radius: 18px; overflow: hidden; }
+    .property-map-embed > div { width: 100%; height: 100%; display: block; }
+    @media (max-width: 992px) { .property-map-embed { height: 420px; } }
+    .map-toggle-btn { position:absolute; top:10px; right:10px; z-index:1002; background:#fff; border:0; padding:8px; border-radius:9999px; box-shadow:0 4px 12px rgba(0,0,0,.2); cursor:pointer; }
+    .map-toggle-btn:hover { background:#f3f4f6; }
+  </style>
+
+  <!-- Location & Nearby (Leaflet embed) -->
+  <div class="container" style="margin-top: 20px;">
+    <h4 style="margin-bottom:10px">{% trans "Location & Nearby" %}</h4>
+    <div class="property-map-embed">
+      {% if map_embed_html %}
+        {{ map_embed_html|safe }}
+      {% else %}
+        <iframe src="{% url 'listing_map_embed' listing.id %}" title="{% trans "Listing Map" %}"
+                style="width:100%;height:100%;border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      {% endif %}
+    </div>
+  </div>
+  
+{% endblock %}

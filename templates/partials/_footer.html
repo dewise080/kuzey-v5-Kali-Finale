@@ -1,0 +1,230 @@
+{% load static %}
+{% load i18n %}
+<div class="contact section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-4">
+          <div class="section-heading text-center">
+                     <h6 >{% trans "Contact Us" %}</h6>
+            <h2>{% trans "Get In Touch With Our Agents" %}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div id="map">
+            <a href="https://maps.app.goo.gl/jx2HWaHUL8YCYTXX8" target="_blank" rel="noopener">
+              <img src="{% static 'map-location.png' %}"
+                   alt="Open location in Google Maps"
+                   style="width:100%; height:500px; border-radius:8px; display:block; object-fit: cover; border:0;"
+                   loading="lazy">
+            </a>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+<div class="item phone">
+      <a href="https://wa.me/905423637436" target="_blank" style="text-decoration: none; color: inherit;">
+        <img src="{% static 'newfront/assets/images/phone-icon.png' %}" alt="" style="max-width: 52px;">
+        <h6>+905423637436<br><span>Phone Number</span></h6>
+      </a>
+    </div>            </div>
+            <div class="col-lg-6">
+              <div class="item email">
+<a href="mailto:hasangun@kuzey-yapi-emlak.com" style="text-decoration: none; color: inherit;">
+        <img src="{% static 'newfront/assets/images/email-icon.png' %}" alt="" style="max-width: 52px;">
+        <h6>hasangun@kuzey-yapi-emlak.com<br><span>Business Email</span></h6>
+      </a>              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <form id="contact-form" action="" method="post">
+            <div class="row">
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="name">{% trans "Full Name" %}</label>
+                  <input type="name" name="name" id="name" placeholder="Your Name..." autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="email">{% trans "Email Address" %}</label>
+                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required="">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="subject">{% trans "Subject" %}</label>
+                  <input type="subject" name="subject" id="subject" placeholder="Subject..." autocomplete="on" >
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="message">{% trans "Message" %}</label>
+                  <textarea name="message" id="message" placeholder="Your Message"></textarea>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="orange-button">{% trans "Send Message" %}</button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Footer Styles: Hover animasyonları için gerekli CSS -->
+<style>
+  /* Genel Geçiş Efekti: Tüm animasyonlu öğeler için yumuşak geçiş */
+  .footer-link, .social-icon, .footer-logo {
+    transition: all 0.3s ease;
+    display: inline-block; /* Kayma efektinin çalışması için gerekli */
+  }
+
+  /* 1. Link Hover Efekti (Sağa kayma ve renk değişimi) */
+  .footer-link {
+    text-decoration: none;
+  }
+  .footer-link:hover {
+    color: #ffffff !important; /* Üzerine gelince tam beyaz olur */
+    padding-left: 10px; /* Sağa doğru 10px kayar */
+    text-decoration: none;
+  }
+
+  /* 2. Sosyal Medya İkonları (Yukarı zıplama) */
+  .social-icon:hover {
+    transform: translateY(-5px); /* Yukarı doğru hareket */
+    color: #fff !important;
+  }
+
+  /* 3. Logo (Hafif solma) */
+  .footer-logo:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<footer id="site-footer" style="
+    background: url('{% static 'footer-bg.png' %}') no-repeat center center;
+    background-size: cover;
+    color:#e5e5e5;
+    padding:50px 0 25px;
+    margin-top:60px;">
+    <div class="container">
+
+    <!-- 1. SATIR: Marka (Sol) ve Navigasyon (Sağ) -->
+    <div class="row" style="align-items:flex-start; justify-content:space-between; margin-bottom: 20px;">
+
+      <!-- SOL: Brand / About -->
+ <div class="col-lg-4 col-md-6" style="margin-bottom:24px;">
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+
+    <video autoplay loop muted playsinline class="footer-logo" style="height:150px; width:auto; display:block;">
+        <source src="{% static 'footer.mp4' %}" type="video/mp4">
+    </video>
+
+  </div>
+    <p style="opacity:.85; font-size:14px; line-height:1.7;    text-align: left;
+">{% trans "Discover, rent or buy verified properties with modern tools and local expertise." %}</p>
+
+     <!-- 1. <h5 style="margin:0; color:#fff;">Kavakli</h5>-->
+
+        <!-- Sosyal Medya İkonları -->
+
+      </div>
+
+      <!-- SAĞ: Navigation -->
+      <div class="col-lg-3 col-md-3" style="margin-bottom:24px;">
+        <h5 style="color:#fff; margin-bottom:12px;">{% trans "Navigation" %}</h5>
+        <ul style="list-style:none; margin:0; padding:0; line-height:2;">
+          <!-- Linklere 'footer-link' class'ı eklendi -->
+          <li>
+            <a href="{% url 'new_index' %}" class="footer-link" style="color:#e5e5e5;">
+              <i class="fa fa-globe" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Home" %}
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'new_properties' %}" class="footer-link" style="color:#e5e5e5;">
+              <i class="fa fa-home" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Properties" %}
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'new_map' %}" class="footer-link" style="color:#e5e5e5;">
+              <i class="fa fa-map" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Map" %}
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'new_contact' %}" class="footer-link" style="color:#e5e5e5;">
+              <i class="fa fa-phone" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Contact" %}
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'new_financing' %}" class="footer-link" style="color:#e5e5e5;">
+              <i class="fa fa-usd" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Financing" %}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- 2. SATIR: İletişim (Hemen altında) -->
+    <div class="row">
+      <div class="col-lg-4 col-md-5" style="margin-bottom:24px;">
+        <h5 style="color:#fff; margin-bottom:12px;">{% trans "Contact" %}</h5>
+        <ul style="list-style:none; margin:0; padding:0; line-height:2;">
+          <li><i class="fa fa-map" aria-hidden="true" style="margin-right:8px; color:#999;"></i> Kavaklı, 34520 Beylikdüzü/İstanbul</li>
+
+          <!-- Mail Linki -->
+          <li>
+            <i class="fa fa-envelope" aria-hidden="true" style="margin-right:8px; color:#999;"></i>
+            <a href="mailto:hasangun@kuzey-yapi-emlak.com" class="footer-link" style="color:#e5e5e5;">hasangun@kuzey-yapi-emlak.com</a>
+          </li>
+
+          <li>
+            <i class="fab fa-whatsapp" aria-hidden="true" style="margin-right:8px; color:#999;"></i>
+            <a href="https://wa.me/905423637436" target="_blank" rel="noopener" class="footer-link" style="color:#e5e5e5;">
+              +905423637436
+            </a>
+          </li>
+          <!-- Takvim Linki -->
+          <li>
+            <a href="https://cal.com/hasan-gun-saqvh6" target="_blank" rel="noopener" class="footer-link" style="color:#e5e5e5;">
+              <i class="fa fa-calendar" style="margin-right:8px;"></i> {% trans "Schedule a visit" %}
+            </a>
+          </li>
+        </ul>
+      </div>
+          <div style="display:flex; gap:12px; margin-top:12px;">
+          <a href=" https://www.facebook.com/Koral-City-ltd-100737889187297" class="social-icon" target="_blank" rel="noopener" style="color:#e5e5e5;">
+            <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.instagram.com/koralcityltd/" class="social-icon" target="_blank" rel="noopener" style="color:#e5e5e5;">
+            <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>
+          </a>
+          <a href="https://twitter.com/Koralcityltd" class="social-icon" target="_blank" rel="noopener" style="color:#e5e5e5;">
+            <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+          </a>
+        </div>
+    </div>
+
+    <hr style="border-color:#333; margin:10px 0 16px;">
+
+    <!-- Alt Bilgi -->
+    <div class="row">
+      <div class="col-12" style="text-align:center;">
+        <p style="margin:0; font-size:14px; color:#cfcfcf;">
+          &copy; 2025
+          <a href="https://explore.lotfinity.tech" target="_blank" rel="noopener" class="footer-link" style="color:#fff; text-decoration:underline;">&infin; Lotfinity &infin; tech Co.</a>, Ltd. {% trans "All rights reserved." %}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

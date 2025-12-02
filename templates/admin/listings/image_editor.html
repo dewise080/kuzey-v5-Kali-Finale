@@ -1,0 +1,132 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/tui-image-editor/tui-image-editor.css' %}">
+  <!-- Fallback CSS from CDN if local is not present -->
+  <link rel="stylesheet" href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css" />
+  <style>
+    .tui-image-editor-header-buttons .tui-image-editor-download-btn { display: none; }
+    .editor-wrap { height: calc(100vh - 180px); }
+    .actions { margin: 12px 0; display: flex; gap: 8px; }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Image Editor" %} — {{ obj }}</h1>
+  <div class="actions">
+    <a href="{{ cancel_url }}" class="button">{% trans "Back" %}</a>
+    <button id="btn-save" class="button default">{% trans "Save" %}</button>
+    <label class="button" for="wm-input">{% trans "Add Watermark" %}</label>
+    <input type="file" id="wm-input" accept="image/*" style="display:none" />
+  </div>
+  <div id="tui-editor" class="editor-wrap"></div>
+
+  <form id="save-form" method="post" action="{{ save_url }}" enctype="multipart/form-data" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="dataurl" id="dataurl" />
+  </form>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script>
+    // CSRF helper for fetch if needed in the future
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+  <!-- Try local vendor scripts first -->
+  <script src="{% static 'vendor/tui-image-editor/tui-code-snippet.js' %}"></script>
+  <script src="{% static 'vendor/tui-image-editor/tui-color-picker.js' %}"></script>
+  <script src="{% static 'vendor/tui-image-editor/tui-image-editor.js' %}"></script>
+  <script>
+    (function() {
+      function startEditor() {
+        const initialUrl = "{{ image_url|default:''|escapejs }}";
+        const el = document.getElementById('tui-editor');
+        if (!el) { return; }
+        const includeUI = {
+          theme: {},
+          menu: ['crop','flip','rotate','draw','shape','icon','text','mask','filter'],
+          initMenu: 'filter',
+          menuBarPosition: 'bottom'
+        };
+        if (initialUrl) {
+          includeUI.loadImage = { path: initialUrl, name: 'image' };
+        }
+        const instance = new tui.ImageEditor(el, {
+          includeUI,
+          cssMaxWidth: 1200,
+          cssMaxHeight: 800,
+          selectionStyle: { cornerSize: 20, rotatingPointOffset: 70 }
+        });
+
+        document.getElementById('btn-save').addEventListener('click', function() {
+          const dataURL = instance.toDataURL({ format: 'png' });
+          const form = document.getElementById('save-form');
+          document.getElementById('dataurl').value = dataURL;
+          form.submit();
+        });
+
+        const wmInput = document.getElementById('wm-input');
+        wmInput.addEventListener('change', function(ev) {
+          const file = ev.target.files && ev.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            instance.addImageObject(e.target.result).then(objProps => {
+              instance.setObjectProperties(objProps.id, { opacity: 0.6 });
+              const w = instance.getCanvasSize().width;
+              const scale = Math.min(0.25, Math.max(0.1, (0.2 * w) / objProps.width));
+              instance.setObjectProperties(objProps.id, { scaleX: scale, scaleY: scale });
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function loadScript(src, cb) {
+        var s = document.createElement('script');
+        s.src = src; s.async = true;
+        s.onload = function(){ cb && cb(); };
+        s.onerror = function(){ cb && cb(new Error('load fail')); };
+        document.head.appendChild(s);
+      }
+
+      function ensureEditor() {
+        if (window.tui && window.tui.ImageEditor) {
+          startEditor();
+          return;
+        }
+        // Fallback to CDN if local vendor not present
+        loadScript('https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js', function(){
+          loadScript('https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.js', function(){
+            loadScript('https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.js', function(){
+              if (window.tui && window.tui.ImageEditor) startEditor();
+              else alert('Failed to load editor assets.');
+            });
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', ensureEditor);
+      } else {
+        ensureEditor();
+      }
+    })();
+  </script>
+{% endblock %}

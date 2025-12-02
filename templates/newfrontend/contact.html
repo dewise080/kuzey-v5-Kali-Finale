@@ -1,0 +1,31 @@
+{% extends 'newfrontend/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block nav_contact_active %}active{% endblock %}
+{% block title %}Villa Agency - Contact{% endblock %}
+{% block content %}
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="breadcrumb"><a href="{% url 'new_index' %}">{% trans "Home" %}</a>  /  {% trans "Contact Us" %}</span>
+          <h3>{% trans "Contact Us" %}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="section properties">
+    <div class="container">
+      <ul class="properties-filter">
+        <li><a class="is_active" href="#!" data-filter="*">{% trans "Show All" %}</a></li>
+        <li><a href="#!" data-filter=".adv">{% trans "Apartment" %}</a></li>
+        <li><a href="#!" data-filter=".str">{% trans "Villa House" %}</a></li>
+        <li><a href="{% url 'new_map' %}" >{% trans "Map" %}</a></li>
+      </ul>
+        </div>
+          </div>
+            </div>
+
+
+
+{% endblock %}

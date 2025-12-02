@@ -1,0 +1,87 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/filerobot-image-editor/filerobot-image-editor.min.css' %}">
+  <link rel="stylesheet" href="https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/filerobot-image-editor.min.css" />
+  <style>
+    .editor-wrap { height: calc(100vh - 180px); }
+    .actions { margin: 12px 0; display: flex; gap: 8px; }
+    #fie-container { width: 100%; height: calc(100vh - 220px); border: 1px solid #ddd; }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Image Editor (Filerobot)" %} — {{ obj }}</h1>
+  <div class="actions">
+    <a href="{{ cancel_url }}" class="button">{% trans "Back" %}</a>
+    <button id="btn-save" class="button default">{% trans "Save" %}</button>
+  </div>
+  <div id="fie-container"></div>
+
+  <form id="save-form" method="post" action="{{ save_url }}" enctype="multipart/form-data" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="dataurl" id="dataurl" />
+  </form>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+  <!-- Local vendor first -->
+  <script src="{% static 'vendor/filerobot-image-editor/filerobot-image-editor.min.js' %}"></script>
+  <!-- CDN fallback -->
+  <script>
+    (function ensureFIE(){
+      if (window.FilerobotImageEditor) return;
+      var s=document.createElement('script');
+      s.src='https://scaleflex.cloudimg.io/v7/plugins/filerobot-image-editor/filerobot-image-editor.min.js';
+      document.head.appendChild(s);
+    })();
+  </script>
+  <script>
+    (function(){
+      function start(){
+        if (!window.FilerobotImageEditor) { setTimeout(start, 100); return; }
+        const initialUrl = "{{ image_url|default:''|escapejs }}";
+        const container = document.getElementById('fie-container');
+        const config = {
+          source: initialUrl || '',
+          annotationsCommon: { fill: '#ff0000' },
+          Text: { text: 'Sample' },
+          Crop: { presetsItems: [ { title: '1:1', ratio: 1 }, { title: '4:3', ratio: 4/3 }, { title: '16:9', ratio: 16/9 } ] },
+          translations: { profile: 'en' },
+          onSave: function(imageInfo, designState){
+            try {
+              const dataURL = imageInfo && imageInfo.imageBase64 ? (imageInfo.mime || 'image/png').startsWith('image/') ? imageInfo.imageBase64 : null : null;
+              if (!dataURL) { alert('Save failed: no image data'); return; }
+              document.getElementById('dataurl').value = dataURL;
+              document.getElementById('save-form').submit();
+            } catch(e) { alert('Save failed'); }
+          }
+        };
+        const editor = new FilerobotImageEditor(container, config);
+        editor.render({ onClose: function(){ window.location = {{ cancel_url|default:'""'|safe }}; } });
+        document.getElementById('btn-save').addEventListener('click', function(){ editor.export(); });
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+    })();
+  </script>
+{% endblock %}
+

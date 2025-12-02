@@ -1,0 +1,56 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+  <h1>{% trans "Bulk edit images" %}</h1>
+  <p>{% blocktrans %}You are about to apply edits to {{ images|length }} images.{% endblocktrans %}</p>
+
+  <form method="post" enctype="multipart/form-data" style="max-width: 720px;">
+    {% csrf_token %}
+
+    {% if form.errors %}
+      <div class="errornote">
+        {% trans "Please correct the errors below and try again." %}
+      </div>
+    {% endif %}
+
+    {# Preserve selection #}
+    <input type="hidden" name="action" value="{{ action }}" />
+    <input type="hidden" name="apply" value="1" />
+    {% if select_across %}
+      <input type="hidden" name="select_across" value="{{ select_across }}" />
+    {% endif %}
+    {% for obj_id in ids %}
+      <input type="hidden" name="ids" value="{{ obj_id }}" />
+    {% endfor %}
+
+    <fieldset class="module aligned">
+      <h2>{% trans "Crop" %}</h2>
+      <div class="form-row">{{ form.aspect_ratio.label_tag }} {{ form.aspect_ratio }} {{ form.aspect_ratio.errors }}</div>
+    </fieldset>
+
+    <fieldset class="module aligned">
+      <h2>{% trans "Frame" %}</h2>
+      <div class="form-row">{{ form.border_px.label_tag }} {{ form.border_px }} {{ form.border_px.errors }}</div>
+      <div class="form-row">{{ form.border_color.label_tag }} {{ form.border_color }} {{ form.border_color.errors }}</div>
+      <div class="form-row">{{ form.rounded.label_tag }} {{ form.rounded }} {{ form.rounded.errors }}</div>
+    </fieldset>
+
+    <fieldset class="module aligned">
+      <h2>{% trans "Watermark" %}</h2>
+      <div class="form-row">{{ form.watermark_image.label_tag }} {{ form.watermark_image }} {{ form.watermark_image.errors }}</div>
+      <div class="form-row">{{ form.wm_position.label_tag }} {{ form.wm_position }} {{ form.wm_position.errors }}</div>
+      <div class="form-row">{{ form.wm_opacity.label_tag }} {{ form.wm_opacity }} {{ form.wm_opacity.errors }}</div>
+      <div class="form-row">{{ form.wm_scale.label_tag }} {{ form.wm_scale }} {{ form.wm_scale.errors }}</div>
+      <div class="form-row">{{ form.wm_margin.label_tag }} {{ form.wm_margin }} {{ form.wm_margin.errors }}</div>
+    </fieldset>
+
+    <fieldset class="module aligned">
+      <div class="form-row">{{ form.confirm }} {{ form.confirm.label_tag }} {{ form.confirm.errors }}</div>
+    </fieldset>
+
+    <div class="submit-row">
+      <input type="submit" class="default" value="{% trans 'Apply edits' %}" />
+    </div>
+  </form>
+{% endblock %}

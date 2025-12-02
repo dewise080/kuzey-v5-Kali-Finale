@@ -1,0 +1,347 @@
+{% load static %}
+{% load i18n %}
+{% load lang_links %}
+{% load theme_filters %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>{% block title %}Estate Agency - Demo{% endblock %}</title>
+
+    <!-- Vendor Bootstrap (shipped with newfront) -->
+    <link href="{% static 'newfront/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'newfront/assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'newfront/assets/css/templatemo-villa-agency.css' %}">
+    <link rel="stylesheet" href="{% static 'newfront/assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'newfront/assets/css/animate.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{% static 'newfront/assets/css/typing-effect.css' %}">
+
+    
+    
+    {% block extra_css %}{% endblock %}
+    {% if theme and theme.font_import_url %}
+      <link href="{{ theme.font_import_url|font_href }}" rel="stylesheet">
+    {% endif %}
+    {% if theme %}
+    <!-- Dynamic theme overrides from admin -->
+    <style>
+      :root{
+        --theme-primary: {{ theme.primary_color }};
+        --theme-accent: {{ theme.accent_color }};
+        --theme-bg: {{ theme.background_color }};
+        --theme-text: {{ theme.text_color }};
+        --theme-font: {{ theme.font_family|escapejs }};
+      }
+      {{ theme.font_selectors }}{ font-family: var(--theme-font) !important; color: var(--theme-text); }
+      body{ background-color: var(--theme-bg); }
+      ::selection{ background: var(--theme-accent); color:#fff; }
+      /* Accent / primary overrides */
+      .icon-button a i{ background-color: var(--theme-primary) !important; }
+      .main-button a:hover{ background-color: var(--theme-primary) !important; }
+      .properties .item h6{ color: var(--theme-primary) !important; }
+      .main-banner .owl-dots .active{ background-color: var(--theme-primary) !important; }
+      .sub-header ul.social-links li a:hover{ background-color: var(--theme-primary) !important; }
+      .single-property .accordion-button:not(.collapsed){ color: var(--theme-primary) !important; }
+      .properties ul.pagination li a:hover,
+      .properties ul.pagination li a.is_active{ background-color: var(--theme-primary) !important; }
+      .properties .item span.category{ background-color: color-mix(in srgb, var(--theme-primary) 30%, white) !important; }
+      a{ color: inherit; }
+      {{ theme.custom_css|safe }}
+    </style>
+    {% endif %}
+    <style>
+      /* Language switcher styles (global) */
+      .top-language-bar { position: relative; z-index: 1000; background: #fff; }
+      .top-language-inner { display: flex; justify-content: center; padding: 8px 0; }
+      .lang-switcher { position: relative; }
+      .lang-current { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid #e5e7eb; border-radius: 999px; background: #fff; color: #111827; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; line-height: 1; }
+      .lang-current .flag { width: 18px; height: 18px; border-radius: 2px; object-fit: cover; }
+      .lang-current .code { font-weight: 600; font-size: 12px; letter-spacing: .3px; }
+      .lang-current .chev { font-size: 12px; opacity: .7; }
+      .lang-current:focus { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.25); }
+      .lang-menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 200px; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; box-shadow: 0 10px 28px rgba(0,0,0,0.12); padding: 6px; display: none; z-index: 100000; }
+      .lang-switcher.open .lang-menu { display: block; z-index: 100000; }
+      .lang-item { margin: 0; }
+      .lang-item + .lang-item { margin-top: 2px; }
+      .lang-item button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: transparent; border: 0; border-radius: 8px; cursor: pointer; font-size: 13px; color: #111827; text-align: left; }
+      .lang-item a .flag { width: 18px; height: 18px; border-radius: 2px; object-fit: cover; }
+      .lang-item button:hover { background: #f3f4f6; }
+      @media (max-width: 768px) {
+        .lang-menu { right: auto; left: 50%; transform: translateX(-50%); min-width: 220px; }
+      }
+      
+      /* Tangerine Font for Banner Headings */
+      .tangerine-regular {
+        font-family: "Tangerine", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Page Loader (Barba.js + responsive video) -->
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+      <video id="loaderVideo" class="loader-video" muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- Global Language Switcher (top-centered, outside nav) 
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_available_languages as LANGUAGES %}
+    <div class="top-language-bar">
+      <div class="container">
+        <div class="top-language-inner">
+          {% get_language_links as LANG_LINKS %}
+          <div class="lang-switcher" data-lang-current="{{ LANGUAGE_CODE }}">
+            {% with current_flag='flags/'|add:LANGUAGE_CODE|add:'.svg' %}
+              <button type="button" class="lang-current" aria-haspopup="true" aria-expanded="false" aria-label="{% trans 'Select language' %}">
+                <img class="flag" src="{% static current_flag %}" alt="{{ LANGUAGE_CODE }}">
+                <span class="code">{{ LANGUAGE_CODE|upper }}</span>
+                <span class="chev" aria-hidden="true">▾</span>
+              </button>
+            {% endwith %}
+            <div class="lang-menu" role="menu" aria-label="{% trans 'Available languages' %}">
+              {% comment %} Static-site friendly: swap the '/xx/' prefix {% endcomment %}
+              {% for lang in LANGUAGES %}
+                {% with flag_file='flags/'|add:lang.0|add:'.svg' %}
+                  {% with new_path='/'|add:lang.0|add:request.path|slice:'3:' %}
+                    <div class="lang-item">
+                      <a href="{{ new_path }}" role="menuitem" aria-label="{{ lang.1 }}" class="lang-item-link" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;color:#111827;">
+                        <img class="flag" src="{% static flag_file %}" alt="{{ lang.0 }}">
+                        <span class="name">{{ lang.1 }}</span>
+                      </a>
+                    </div>
+                  {% endwith %}
+                {% endwith %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+
+     <!-- Global Language Switcher (top-centered, outside nav) -->
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_available_languages as LANGUAGES %}
+    <div class="top-language-bar">
+      <div class="container">
+        <div class="top-language-inner">
+          <div class="lang-switcher" data-lang-current="{{ LANGUAGE_CODE }}">
+            {% with current_flag='flags/'|add:LANGUAGE_CODE|add:'.svg' %}
+              <button type="button" class="lang-current" aria-haspopup="true" aria-expanded="false" aria-label="{% trans 'Select language' %}">
+                <img class="flag" src="{% static current_flag %}" alt="{{ LANGUAGE_CODE }}">
+                <span class="code">{{ LANGUAGE_CODE|upper }}</span>
+                <span class="chev" aria-hidden="true">▾</span>
+              </button>
+            {% endwith %}
+            <div class="lang-menu" role="menu" aria-label="{% trans 'Available languages' %}">
+              {% for item in LANG_LINKS %}
+                {% with flag_file='flags/'|add:item.code|add:'.svg' %}
+                  <div class="lang-item">
+                    <a href="{{ item.url }}" role="menuitem" aria-label="{{ item.name }}" class="lang-item-link" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;color:#111827;">
+                      <img class="flag" src="{% static flag_file %}" alt="{{ item.code }}">
+                      <span class="label">{{ item.name }}</span>
+                    </a>
+                  </div>
+                {% endwith %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <!-- Top sub-header -->
+    <div class="sub-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-8">
+            <ul class="info">
+              <li><i class="fa fa-envelope"></i> hasangun@kuzey-yapi-emlak.com</li>
+              <li><i class="fa fa-map-marker"></i> Kavaklı, 34520 Beylikdüzü/İstanbul</li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <ul class="social-links">
+              <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+              <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main header/nav -->
+    <header class="header-area header-sticky">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+                          <a href="{% url 'new_index' %}" class="logo" style="display:flex; align-items:center; justify-content:center; width:220px; height:50px; text-decoration:none;margin-top:15px;">
+                <img src="{% static 'logo.png' %}" alt="Logo" style="max-height:50px; width:auto; display:block;" />
+              </a>
+              <ul class="nav">
+                <li><a href="{% url 'new_index' %}" class="{% block nav_home_active %}{% endblock %}"><i class="fa fa-globe" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Home" %}</a></li>
+                <li><a href="{% url 'new_properties' %}" class="{% block nav_properties_active %}{% endblock %}"><i class="fa fa-home" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Properties" %}</a></li>
+                <li><a href="{% url 'new_map' %}" class="{% block nav_map_active %}{% endblock %}"><i class="fa fa-map" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Map" %}</a></li>
+                    <!-- Property Details 
+
+                <li><a href="{% url 'new_properties' %}" class="{% block nav_details_active %}{% endblock %}">{% trans "Property Details" %}</a></li>    -->
+
+                <li><a href="{% url 'new_contact' %}" class="{% block nav_contact_active %}{% endblock %}"> <i class="fa fa-phone" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Contact Us" %}</a></li>
+                <li><a href="{% url 'new_financing' %}" class="{% block nav_financing_active %}{% endblock %}"><i class="fa fa-bank" aria-hidden="true" style="margin-right:8px;"></i>{% trans "Financing" %}</a></li>
+
+                <!-- Keep CTA as last-child styling -->
+<li>
+    <a href="#" data-cal-link="hasan-gun-saqvh6" data-cal-config='{"layout":"month_view"}'>
+        <i class="fa fa-calendar" style="margin-right:5px;padding-right:5px;"></i> 
+        {% trans "Schedule a visit" %}
+    </a>
+</li>              </ul>
+              <a class="menu-trigger"><span>Menu</span></a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div data-barba="wrapper">
+      <main data-barba="container" data-barba-namespace="{{ request.resolver_match.url_name|default:'page' }}">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+  
+   {% include 'partials/_footer.html' %}
+    <!-- Scripts -->
+    <script src="{% static 'newfront/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'newfront/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'newfront/assets/js/isotope.min.js' %}"></script>
+    <script src="{% static 'newfront/assets/js/owl-carousel.js' %}"></script>
+    <script src="{% static 'newfront/assets/js/counter.js' %}"></script>
+    <script src="{% static 'newfront/assets/js/custom.js' %}"></script>
+    <script src="{% static 'newfront/assets/js/typing-effect.js' %}"></script>
+
+    <script>
+      // Language switcher interactions (global)
+      document.addEventListener('DOMContentLoaded', function() {
+        var langSwitcher = document.querySelector('.top-language-bar .lang-switcher') || document.querySelector('.lang-switcher');
+        if (!langSwitcher) return;
+        var langButton = langSwitcher.querySelector('.lang-current');
+        var isTouch = false;
+        function onFirstTouch(){ isTouch = true; window.removeEventListener('touchstart', onFirstTouch); }
+        window.addEventListener('touchstart', onFirstTouch);
+        function closeMenu(){ langSwitcher.classList.remove('open'); langButton && langButton.setAttribute('aria-expanded', 'false'); }
+        function openMenu(){ langSwitcher.classList.add('open'); langButton && langButton.setAttribute('aria-expanded', 'true'); }
+        function closeMenuOutside(event){ if (!langSwitcher.contains(event.target)) { closeMenu(); } }
+        if (langButton) {
+          langButton.addEventListener('click', function(){
+            var isOpen = langSwitcher.classList.contains('open');
+            if (isOpen) closeMenu(); else openMenu();
+          });
+        }
+        // Hover disabled on desktop; click only
+        document.addEventListener('click', closeMenuOutside);
+        window.addEventListener('unload', function(){ document.removeEventListener('click', closeMenuOutside); });
+      });
+    </script>
+
+    <style>
+      .page-loader { position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 2147483000; opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
+      .page-loader.active { opacity: 1; visibility: visible; }
+      .loader-video { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+
+    <script>
+      (function(){
+        var loader = document.getElementById('page-loader');
+        var video = document.getElementById('loaderVideo');
+        var SMALL_SRC = '/static/loader-sm-white-faster.mp4';
+        var BIG_SRC = '/static/loader-bg-white.mp4';
+
+        function pickSrc(){
+          try {
+            return (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) ? SMALL_SRC : BIG_SRC;
+          } catch(e){ return BIG_SRC; }
+        }
+
+        function setVideoSource(){
+          var desired = pickSrc();
+          if (video.getAttribute('src') !== desired) {
+            video.setAttribute('src', desired);
+            try { video.load(); } catch(e){}
+          }
+        }
+
+        function showLoader(){
+          setVideoSource();
+          if (!loader.classList.contains('active')) loader.classList.add('active');
+          loader.setAttribute('aria-hidden', 'false');
+          // Hide when video ends (bind per-show)
+          var onEnd = function(){ hideLoader(); };
+          video.addEventListener('ended', onEnd, { once: true });
+          // Attempt autoplay; muted set to satisfy policies
+          try { video.currentTime = 0; video.play().catch(function(){ /* ignore */ }); } catch(e){}
+        }
+
+        function hideLoader(){
+          loader.classList.remove('active');
+          loader.setAttribute('aria-hidden', 'true');
+          try { video.pause(); } catch(e){}
+        }
+
+        // Initial load: show for full video duration
+        document.addEventListener('DOMContentLoaded', function(){
+          showLoader();
+        });
+
+        // Barba.js page transitions
+        document.addEventListener('DOMContentLoaded', function(){
+          if (!window.barba) return;
+          barba.init({
+            transitions: [{
+              name: 'video-loader',
+              leave() {
+                // Fade in loader then proceed; hide on video end only
+                showLoader();
+                return new Promise(function(res){ setTimeout(res, 250); });
+              },
+              enter() {
+                // Let the overlay stay until the video ends (handled globally)
+              }
+            }]
+          });
+        });
+
+        // Keep source in sync on resize/orientation changes
+        window.addEventListener('resize', function(){
+          var current = video.getAttribute('src');
+          var desired = pickSrc();
+          if (current !== desired) setVideoSource();
+        });
+      })();
+    </script>
+
+    <script>
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", {origin:"https://cal.com"});
+
+  // This instructs Cal.com to look for clicks on elements with the 'data-cal-link' attribute
+  Cal("ui", {"theme":"dark", "styles":{"branding":{"brandColor":"#000000"}}, "hideEventTypeDetails":false, "layout":"month_view"});
+</script>
+
+    {% include 'newfrontend/whatsappwidget.html' %}
+    {% block extra_js %}{% endblock %}
+  </body>
+ </html>
