@@ -221,10 +221,15 @@ ROSETTA_AUTO_COMPILE = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# Default static root (overridden during distill when enabled above)
-STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles')
+# STATIC_ROOT is where collectstatic gathers all static files (for production/Docker)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[(os.path.join(BASE_DIR, 'coralcity/static'))]
+
+# STATICFILES_DIRS are additional directories where Django looks for static files
+# This includes your project-level static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'coralcity/static'),
+]
 
 
 # Media Folder Settings
