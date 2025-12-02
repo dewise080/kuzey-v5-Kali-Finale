@@ -1,0 +1,9 @@
+.git
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+node_modules/
+*.log

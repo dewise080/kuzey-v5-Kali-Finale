@@ -37,3 +37,4 @@ playwright==1.48.0
 django-image-uploader-widget
 django-baton
 easy-thumbnails==2.10
+django_distill==3.2.7
