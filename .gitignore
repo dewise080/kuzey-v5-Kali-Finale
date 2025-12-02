@@ -22,6 +22,8 @@ local_settings.py
 build/
 develop-eggs/
 dist/
+!baton/static/baton/app/dist/
+!staticfiles/baton/app/dist/
 downloads/
 eggs/
 .eggs/
