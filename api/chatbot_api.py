@@ -823,3 +823,34 @@ def chatbot_api_docs(request: HttpRequest) -> JsonResponse:
 
 # Import math functions for geo calculations
 from math import cos, radians
+import os
+
+
+@require_GET
+def chatbot_openapi_spec(request: HttpRequest) -> JsonResponse:
+    """
+    Return the OpenAPI 3.1 specification for the Chatbot API.
+    """
+    spec_path = os.path.join(os.path.dirname(__file__), 'chatbot_openapi.json')
+    
+    try:
+        with open(spec_path, 'r', encoding='utf-8') as f:
+            spec = json.load(f)
+        
+        # Update server URL to match current request
+        base_url = _get_base_url(request)
+        spec['servers'] = [
+            {'url': base_url, 'description': 'Current server'},
+            {'url': 'https://kuzey-emlak.lotfinity.tech', 'description': 'Production server'}
+        ]
+        
+        resp = JsonResponse(spec, json_dumps_params={'ensure_ascii': False, 'indent': 2})
+        resp['Access-Control-Allow-Origin'] = '*'
+        return resp
+    except Exception as e:
+        resp = JsonResponse({
+            'error': 'Failed to load OpenAPI spec',
+            'detail': str(e)
+        }, status=500)
+        resp['Access-Control-Allow-Origin'] = '*'
+        return resp

@@ -64,6 +64,7 @@ urlpatterns = [
     path('api/bot/stats', __import__('api.chatbot_api', fromlist=['']).chatbot_listings_stats, name='chatbot_listings_stats'),
     path('api/bot/locations', __import__('api.chatbot_api', fromlist=['']).chatbot_locations, name='chatbot_locations'),
     path('api/bot/docs', __import__('api.chatbot_api', fromlist=['']).chatbot_api_docs, name='chatbot_api_docs'),
+    path('api/bot/openapi.json', __import__('api.chatbot_api', fromlist=['']).chatbot_openapi_spec, name='chatbot_openapi_spec'),
 ]
 
 if _has_graphql:
