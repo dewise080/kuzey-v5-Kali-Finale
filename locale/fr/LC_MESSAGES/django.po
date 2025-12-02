@@ -784,7 +784,7 @@ msgid ""
 msgstr "Nous vous accompagnons dans la pré-approbation bancaire, l'évaluation et le transfert de titre, et coordonnons avec les prêteurs et les promoteurs pour obtenir une solution de financement adaptée à votre achat en Turquie."
 
 #: templates/newfrontend/index.html:6
-msgid "Villa Agency - Home"
+msgid "Kuzey  Emlak  - home"
 msgstr "Villa Agency - Accueil"
 
 #: templates/newfrontend/index.html:13

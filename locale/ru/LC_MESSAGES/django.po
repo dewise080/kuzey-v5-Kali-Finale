@@ -796,7 +796,7 @@ msgstr ""
 "подходящее финансирование для вашей покупки в Турции."
 
 #: templates/newfrontend/index.html:6
-msgid "Villa Agency - Home"
+msgid "Kuzey  Emlak  - home"
 msgstr "Агентство Вилл — Главная"
 
 #: templates/newfrontend/index.html:13

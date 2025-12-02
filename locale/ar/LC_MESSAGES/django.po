@@ -811,7 +811,7 @@ msgstr "نرشدك خلال مرحلة ما قبل الموافقة البنكي
 
 # Index page
 #: templates/newfrontend/index.html:6
-msgid "Villa Agency - Home"
+msgid "Kuzey  Emlak  - home"
 msgstr "وكالة فيلا - الرئيسية"
 
 #: templates/newfrontend/index.html:13
@@ -1298,7 +1298,7 @@ msgstr "inquiries@coralcity.com"
 
 # Index page
 #, fuzzy
-#~| msgid "Villa Agency - Home"
+#~| msgid "Kuzey  Emlak  - home"
 #~ msgid "Why is Villa Agency the best ?"
 #~ msgstr "وكالة فيلا - الرئيسية"
 

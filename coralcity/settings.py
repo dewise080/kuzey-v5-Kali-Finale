@@ -259,8 +259,8 @@ if 'DATABASE_URL' in os.environ:
 
 # Optional Baton configuration (safe if baton not installed)
 BATON = {
-    'SITE_HEADER': 'CoralCity Admin',
-    'SITE_TITLE': 'CoralCity Admin',
+    'SITE_HEADER': 'Kuzey Emlak Yönetim',
+    'SITE_TITLE': 'Kuzey Emlak Yönetim',
     'INDEX_TITLE': 'Site administration',
     'SUPPORT_HREF': '#',
     'CONFIRM_UNSAVED_CHANGES': True,

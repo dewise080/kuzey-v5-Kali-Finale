@@ -797,7 +797,7 @@ msgstr ""
 "Kauf in der Türkei zu sichern."
 
 #: templates/newfrontend/index.html:6
-msgid "Villa Agency - Home"
+msgid "Kuzey  Emlak  - home"
 msgstr ""
 
 #: templates/newfrontend/index.html:13
